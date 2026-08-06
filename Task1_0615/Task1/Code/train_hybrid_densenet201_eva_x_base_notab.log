@@ -1,0 +1,201 @@
+HybridFused cnn=densenet201 vit=eva_x_base tabular=False device=cuda fold_arg=all
+cavity  large  medium  none  small
+fold                              
+0          12      12    49     16
+1          11      13    49     16
+2          11      13    50     15
+3          11      12    49     16
+4          12      11    50     16
+/workspace/Code/vendor/eva_x.py:180: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  eva_ckpt = checkpoint_filter_fn(torch.load(pretrained, map_location='cpu'),
+The cache for model files in Transformers v4.22.0 has been updated. Migrating your old cache. This is a one-time only operation. You can interrupt this and resume the migration later on by calling `transformers.utils.move_cache()`.
+<All keys matched successfully>
+0it [00:00, ?it/s]0it [00:00, ?it/s]
+[hybrid/densenet201+eva_x_base] fold 0 attempt 0: 107.9M params, train=355 val=89 tabular=False pos_weight=1.261 lr=3.0e-04 enc_mult=0.3 warmup=3
+/workspace/Code/train_hybrid_fused.py:179: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=use_amp)
+[hybrid/densenet201+eva_x_base] fold0 ep00  loss=0.7348  score=0.5690 acc=0.5730 dice=0.5596 tau*=0.645 fg=0.506 tg=0.000  (81.8s)
+[hybrid/densenet201+eva_x_base] fold0 ep01  loss=0.7027  score=0.7488 acc=0.7865 dice=0.6607 tau*=0.575 fg=0.503 tg=0.000  (69.2s)
+[hybrid/densenet201+eva_x_base] fold0 ep02  loss=0.8226  score=0.7515 acc=0.7865 dice=0.6697 tau*=0.510 fg=0.489 tg=0.000  (67.0s)
+[hybrid/densenet201+eva_x_base] fold0 ep03  loss=0.6513  score=0.7726 acc=0.8090 dice=0.6876 tau*=0.530 fg=0.488 tg=0.000  (64.7s)
+[hybrid/densenet201+eva_x_base] fold0 ep04  loss=0.6014  score=0.7942 acc=0.8427 dice=0.6809 tau*=0.690 fg=0.491 tg=0.000  (63.5s)
+[hybrid/densenet201+eva_x_base] fold0 ep05  loss=0.6321  score=0.7739 acc=0.8090 dice=0.6921 tau*=0.780 fg=0.498 tg=0.000  (71.0s)
+[hybrid/densenet201+eva_x_base] fold0 ep06  loss=0.5131  score=0.7658 acc=0.8090 dice=0.6652 tau*=0.505 fg=0.517 tg=0.000  (62.9s)
+[hybrid/densenet201+eva_x_base] fold0 ep07  loss=0.4277  score=0.8063 acc=0.8427 dice=0.7213 tau*=0.725 fg=0.542 tg=0.000  (62.3s)
+[hybrid/densenet201+eva_x_base] fold0 ep08  loss=0.4373  score=0.7811 acc=0.8202 dice=0.6899 tau*=0.820 fg=0.536 tg=0.000  (68.9s)
+[hybrid/densenet201+eva_x_base] fold0 ep09  loss=0.3250  score=0.8180 acc=0.8652 dice=0.7079 tau*=0.295 fg=0.544 tg=0.000  (64.2s)
+[hybrid/densenet201+eva_x_base] fold0 ep10  loss=0.3119  score=0.7420 acc=0.7865 dice=0.6382 tau*=0.230 fg=0.550 tg=0.000  (67.4s)
+[hybrid/densenet201+eva_x_base] fold0 ep11  loss=0.2800  score=0.7982 acc=0.8427 dice=0.6944 tau*=0.230 fg=0.540 tg=0.000  (64.8s)
+[hybrid/densenet201+eva_x_base] fold0 ep12  loss=0.2515  score=0.7996 acc=0.8427 dice=0.6989 tau*=0.910 fg=0.542 tg=0.000  (64.6s)
+[hybrid/densenet201+eva_x_base] fold0 ep13  loss=0.2834  score=0.8135 acc=0.8539 dice=0.7191 tau*=0.875 fg=0.536 tg=0.000  (64.8s)
+[hybrid/densenet201+eva_x_base] fold0 ep14  loss=0.1577  score=0.7838 acc=0.8202 dice=0.6989 tau*=0.945 fg=0.533 tg=0.000  (66.8s)
+[hybrid/densenet201+eva_x_base] fold0 ep15  loss=0.2174  score=0.8036 acc=0.8427 dice=0.7124 tau*=0.910 fg=0.525 tg=0.000  (67.7s)
+[hybrid/densenet201+eva_x_base] fold0 ep16  loss=0.2130  score=0.8094 acc=0.8539 dice=0.7056 tau*=0.900 fg=0.523 tg=0.000  (62.5s)
+[hybrid/densenet201+eva_x_base] fold0 ep17  loss=0.2413  score=0.8135 acc=0.8539 dice=0.7191 tau*=0.690 fg=0.519 tg=0.000  (63.7s)
+[hybrid/densenet201+eva_x_base] fold0 ep18  loss=0.1998  score=0.8036 acc=0.8427 dice=0.7124 tau*=0.540 fg=0.514 tg=0.000  (62.2s)
+[hybrid/densenet201+eva_x_base] fold0 ep19  loss=0.1159  score=0.8022 acc=0.8427 dice=0.7079 tau*=0.915 fg=0.515 tg=0.000  (60.6s)
+[hybrid/densenet201+eva_x_base] fold0 ep20  loss=0.1990  score=0.7969 acc=0.8427 dice=0.6899 tau*=0.285 fg=0.515 tg=0.000  (64.1s)
+[hybrid/densenet201+eva_x_base] fold0 ep21  loss=0.1677  score=0.8009 acc=0.8427 dice=0.7034 tau*=0.720 fg=0.512 tg=0.000  (64.7s)
+[hybrid/densenet201+eva_x_base] fold0 ep22  loss=0.1221  score=0.7982 acc=0.8427 dice=0.6944 tau*=0.380 fg=0.509 tg=0.000  (63.0s)
+[hybrid/densenet201+eva_x_base] fold0 ep23  loss=0.1753  score=0.7798 acc=0.8202 dice=0.6854 tau*=0.235 fg=0.507 tg=0.000  (71.7s)
+[hybrid/densenet201+eva_x_base] fold0 ep24  loss=0.1982  score=0.7784 acc=0.8202 dice=0.6809 tau*=0.280 fg=0.505 tg=0.000  (63.7s)
+[hybrid/densenet201+eva_x_base] fold0 ep25  loss=0.1131  score=0.7937 acc=0.8315 dice=0.7056 tau*=0.690 fg=0.503 tg=0.000  (62.4s)
+[hybrid/densenet201+eva_x_base] fold0 ep26  loss=0.1619  score=0.7744 acc=0.8202 dice=0.6674 tau*=0.270 fg=0.502 tg=0.000  (66.2s)
+[hybrid/densenet201+eva_x_base] fold0 ep27  loss=0.1248  score=0.7852 acc=0.8202 dice=0.7034 tau*=0.950 fg=0.502 tg=0.000  (65.4s)
+[hybrid/densenet201+eva_x_base] fold0 ep28  loss=0.1824  score=0.7744 acc=0.8202 dice=0.6674 tau*=0.170 fg=0.496 tg=0.000  (65.6s)
+[hybrid/densenet201+eva_x_base] fold0 ep29  loss=0.1266  score=0.7658 acc=0.8090 dice=0.6652 tau*=0.270 fg=0.495 tg=0.000  (70.1s)
+[hybrid/densenet201+eva_x_base] fold0 SWA  score=0.7838 acc=0.8202 dice=0.6989 tau*=0.820 fg=0.503 tg=0.000
+[hybrid/densenet201+eva_x_base] fold0 BEST: {'score': 0.8179775280898876, 'tau': 0.295, 'acc': 0.8651685393258427, 'dice': 0.7078651685393258, 'fusion_gate_mean': 0.5439214706420898, 'tab_gate_mean': 0.0, 'epoch': 9}  -> /workspace/Code/runs/hybrid_densenet201_eva_x_base_notab/fold0_best.pt
+/workspace/Code/vendor/eva_x.py:180: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  eva_ckpt = checkpoint_filter_fn(torch.load(pretrained, map_location='cpu'),
+<All keys matched successfully>
+[hybrid/densenet201+eva_x_base] fold 1 attempt 0: 107.9M params, train=355 val=89 tabular=False pos_weight=1.261 lr=3.0e-04 enc_mult=0.3 warmup=3
+/workspace/Code/train_hybrid_fused.py:179: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=use_amp)
+[hybrid/densenet201+eva_x_base] fold1 ep00  loss=0.7497  score=0.5506 acc=0.5506 dice=0.5506 tau*=0.950 fg=0.498 tg=0.000  (58.0s)
+[hybrid/densenet201+eva_x_base] fold1 ep01  loss=0.7442  score=0.6661 acc=0.7079 dice=0.5685 tau*=0.350 fg=0.491 tg=0.000  (57.4s)
+[hybrid/densenet201+eva_x_base] fold1 ep02  loss=0.7028  score=0.7151 acc=0.7528 dice=0.6270 tau*=0.325 fg=0.484 tg=0.000  (54.1s)
+[hybrid/densenet201+eva_x_base] fold1 ep03  loss=0.6692  score=0.7164 acc=0.7528 dice=0.6315 tau*=0.495 fg=0.482 tg=0.000  (55.6s)
+[hybrid/densenet201+eva_x_base] fold1 ep04  loss=0.5974  score=0.7573 acc=0.7978 dice=0.6629 tau*=0.845 fg=0.501 tg=0.000  (56.8s)
+[hybrid/densenet201+eva_x_base] fold1 ep05  loss=0.5368  score=0.7690 acc=0.8202 dice=0.6494 tau*=0.275 fg=0.521 tg=0.000  (57.8s)
+[hybrid/densenet201+eva_x_base] fold1 ep06  loss=0.4497  score=0.7587 acc=0.7978 dice=0.6674 tau*=0.385 fg=0.532 tg=0.000  (54.8s)
+[hybrid/densenet201+eva_x_base] fold1 ep07  loss=0.4357  score=0.7726 acc=0.8090 dice=0.6876 tau*=0.680 fg=0.535 tg=0.000  (59.1s)
+[hybrid/densenet201+eva_x_base] fold1 ep08  loss=0.4020  score=0.7640 acc=0.7978 dice=0.6854 tau*=0.800 fg=0.540 tg=0.000  (57.2s)
+[hybrid/densenet201+eva_x_base] fold1 ep09  loss=0.3480  score=0.7798 acc=0.8202 dice=0.6854 tau*=0.785 fg=0.539 tg=0.000  (55.5s)
+[hybrid/densenet201+eva_x_base] fold1 ep10  loss=0.3079  score=0.7811 acc=0.8202 dice=0.6899 tau*=0.865 fg=0.543 tg=0.000  (54.4s)
+[hybrid/densenet201+eva_x_base] fold1 ep11  loss=0.2160  score=0.7784 acc=0.8202 dice=0.6809 tau*=0.770 fg=0.544 tg=0.000  (54.9s)
+[hybrid/densenet201+eva_x_base] fold1 ep12  loss=0.2826  score=0.7712 acc=0.8090 dice=0.6831 tau*=0.730 fg=0.539 tg=0.000  (61.4s)
+[hybrid/densenet201+eva_x_base] fold1 ep13  loss=0.2636  score=0.7402 acc=0.7753 dice=0.6584 tau*=0.840 fg=0.529 tg=0.000  (57.7s)
+[hybrid/densenet201+eva_x_base] fold1 ep14  loss=0.1921  score=0.7546 acc=0.7978 dice=0.6539 tau*=0.485 fg=0.533 tg=0.000  (58.1s)
+[hybrid/densenet201+eva_x_base] fold1 ep15  loss=0.1740  score=0.7474 acc=0.7865 dice=0.6562 tau*=0.890 fg=0.529 tg=0.000  (54.7s)
+[hybrid/densenet201+eva_x_base] fold1 ep16  loss=0.1730  score=0.7870 acc=0.8315 dice=0.6831 tau*=0.640 fg=0.527 tg=0.000  (61.2s)
+[hybrid/densenet201+eva_x_base] fold1 ep17  loss=0.1382  score=0.7982 acc=0.8427 dice=0.6944 tau*=0.475 fg=0.519 tg=0.000  (56.9s)
+[hybrid/densenet201+eva_x_base] fold1 ep18  loss=0.1680  score=0.7843 acc=0.8315 dice=0.6742 tau*=0.460 fg=0.516 tg=0.000  (56.3s)
+[hybrid/densenet201+eva_x_base] fold1 ep19  loss=0.1648  score=0.7883 acc=0.8315 dice=0.6876 tau*=0.400 fg=0.512 tg=0.000  (55.2s)
+[hybrid/densenet201+eva_x_base] fold1 ep20  loss=0.1563  score=0.7883 acc=0.8315 dice=0.6876 tau*=0.760 fg=0.515 tg=0.000  (56.3s)
+[hybrid/densenet201+eva_x_base] fold1 ep21  loss=0.1909  score=0.7883 acc=0.8315 dice=0.6876 tau*=0.610 fg=0.509 tg=0.000  (57.7s)
+[hybrid/densenet201+eva_x_base] fold1 ep22  loss=0.2110  score=0.7771 acc=0.8202 dice=0.6764 tau*=0.375 fg=0.505 tg=0.000  (59.5s)
+[hybrid/densenet201+eva_x_base] fold1 ep23  loss=0.1403  score=0.7856 acc=0.8315 dice=0.6787 tau*=0.225 fg=0.505 tg=0.000  (54.1s)
+[hybrid/densenet201+eva_x_base] fold1 ep24  loss=0.1854  score=0.7883 acc=0.8315 dice=0.6876 tau*=0.605 fg=0.502 tg=0.000  (57.2s)
+[hybrid/densenet201+eva_x_base] fold1 ep25  loss=0.1576  score=0.7883 acc=0.8315 dice=0.6876 tau*=0.525 fg=0.500 tg=0.000  (59.0s)
+[hybrid/densenet201+eva_x_base] fold1 ep26  loss=0.2517  score=0.7856 acc=0.8315 dice=0.6787 tau*=0.150 fg=0.500 tg=0.000  (59.4s)
+[hybrid/densenet201+eva_x_base] fold1 ep27  loss=0.1299  score=0.7870 acc=0.8315 dice=0.6831 tau*=0.455 fg=0.499 tg=0.000  (58.6s)
+[hybrid/densenet201+eva_x_base] fold1 ep28  loss=0.1499  score=0.7955 acc=0.8427 dice=0.6854 tau*=0.205 fg=0.497 tg=0.000  (57.4s)
+[hybrid/densenet201+eva_x_base] fold1 ep29  loss=0.1178  score=0.7870 acc=0.8315 dice=0.6831 tau*=0.575 fg=0.497 tg=0.000  (57.6s)
+[hybrid/densenet201+eva_x_base] fold1 SWA  score=0.7897 acc=0.8315 dice=0.6921 tau*=0.765 fg=0.501 tg=0.000
+[hybrid/densenet201+eva_x_base] fold1 BEST: {'score': 0.7982022471910111, 'tau': 0.4749999999999999, 'acc': 0.8426966292134831, 'dice': 0.69438202247191, 'fusion_gate_mean': 0.5186524391174316, 'tab_gate_mean': 0.0, 'epoch': 17}  -> /workspace/Code/runs/hybrid_densenet201_eva_x_base_notab/fold1_best.pt
+/workspace/Code/vendor/eva_x.py:180: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  eva_ckpt = checkpoint_filter_fn(torch.load(pretrained, map_location='cpu'),
+<All keys matched successfully>
+[hybrid/densenet201+eva_x_base] fold 2 attempt 0: 107.9M params, train=355 val=89 tabular=False pos_weight=1.247 lr=3.0e-04 enc_mult=0.3 warmup=3
+/workspace/Code/train_hybrid_fused.py:179: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=use_amp)
+[hybrid/densenet201+eva_x_base] fold2 ep00  loss=0.7545  score=0.6112 acc=0.6180 dice=0.5955 tau*=0.525 fg=0.494 tg=0.000  (57.4s)
+[hybrid/densenet201+eva_x_base] fold2 ep01  loss=0.7070  score=0.7276 acc=0.7640 dice=0.6427 tau*=0.410 fg=0.495 tg=0.000  (61.2s)
+[hybrid/densenet201+eva_x_base] fold2 ep02  loss=0.6832  score=0.7488 acc=0.7865 dice=0.6607 tau*=0.350 fg=0.492 tg=0.000  (61.3s)
+[hybrid/densenet201+eva_x_base] fold2 ep03  loss=0.6779  score=0.7204 acc=0.7528 dice=0.6449 tau*=0.755 fg=0.494 tg=0.000  (61.6s)
+[hybrid/densenet201+eva_x_base] fold2 ep04  loss=0.6064  score=0.7348 acc=0.7753 dice=0.6404 tau*=0.365 fg=0.502 tg=0.000  (66.0s)
+[hybrid/densenet201+eva_x_base] fold2 ep05  loss=0.4858  score=0.7627 acc=0.7978 dice=0.6809 tau*=0.845 fg=0.532 tg=0.000  (66.0s)
+[hybrid/densenet201+eva_x_base] fold2 ep06  loss=0.4431  score=0.7771 acc=0.8202 dice=0.6764 tau*=0.935 fg=0.550 tg=0.000  (66.8s)
+[hybrid/densenet201+eva_x_base] fold2 ep07  loss=0.4029  score=0.7546 acc=0.7978 dice=0.6539 tau*=0.625 fg=0.551 tg=0.000  (62.9s)
+[hybrid/densenet201+eva_x_base] fold2 ep08  loss=0.2990  score=0.7447 acc=0.7865 dice=0.6472 tau*=0.580 fg=0.560 tg=0.000  (60.0s)
+[hybrid/densenet201+eva_x_base] fold2 ep09  loss=0.2711  score=0.7402 acc=0.7753 dice=0.6584 tau*=0.950 fg=0.555 tg=0.000  (63.6s)
+[hybrid/densenet201+eva_x_base] fold2 ep10  loss=0.2107  score=0.7488 acc=0.7865 dice=0.6607 tau*=0.935 fg=0.563 tg=0.000  (68.0s)
+[hybrid/densenet201+eva_x_base] fold2 ep11  loss=0.1991  score=0.7434 acc=0.7865 dice=0.6427 tau*=0.265 fg=0.556 tg=0.000  (65.8s)
+[hybrid/densenet201+eva_x_base] fold2 ep12  loss=0.2449  score=0.7402 acc=0.7753 dice=0.6584 tau*=0.500 fg=0.560 tg=0.000  (61.9s)
+[hybrid/densenet201+eva_x_base] fold2 ep13  loss=0.2857  score=0.7829 acc=0.8315 dice=0.6697 tau*=0.435 fg=0.553 tg=0.000  (63.1s)
+[hybrid/densenet201+eva_x_base] fold2 ep14  loss=0.2240  score=0.7658 acc=0.8090 dice=0.6652 tau*=0.395 fg=0.552 tg=0.000  (60.0s)
+[hybrid/densenet201+eva_x_base] fold2 ep15  loss=0.2158  score=0.7389 acc=0.7753 dice=0.6539 tau*=0.295 fg=0.541 tg=0.000  (66.6s)
+[hybrid/densenet201+eva_x_base] fold2 ep16  loss=0.2289  score=0.7969 acc=0.8427 dice=0.6899 tau*=0.120 fg=0.547 tg=0.000  (63.8s)
+[hybrid/densenet201+eva_x_base] fold2 ep17  loss=0.1460  score=0.7685 acc=0.8090 dice=0.6742 tau*=0.320 fg=0.538 tg=0.000  (59.1s)
+[hybrid/densenet201+eva_x_base] fold2 ep18  loss=0.1414  score=0.7744 acc=0.8202 dice=0.6674 tau*=0.255 fg=0.541 tg=0.000  (64.0s)
+[hybrid/densenet201+eva_x_base] fold2 ep19  loss=0.1473  score=0.7488 acc=0.7865 dice=0.6607 tau*=0.295 fg=0.531 tg=0.000  (67.5s)
+[hybrid/densenet201+eva_x_base] fold2 ep20  loss=0.2213  score=0.7613 acc=0.7978 dice=0.6764 tau*=0.685 fg=0.527 tg=0.000  (67.0s)
+[hybrid/densenet201+eva_x_base] fold2 ep21  loss=0.0886  score=0.7488 acc=0.7865 dice=0.6607 tau*=0.440 fg=0.528 tg=0.000  (62.4s)
+[hybrid/densenet201+eva_x_base] fold2 ep22  loss=0.1607  score=0.7515 acc=0.7865 dice=0.6697 tau*=0.895 fg=0.528 tg=0.000  (68.7s)
+[hybrid/densenet201+eva_x_base] fold2 ep23  loss=0.2179  score=0.7501 acc=0.7865 dice=0.6652 tau*=0.870 fg=0.526 tg=0.000  (63.1s)
+[hybrid/densenet201+eva_x_base] fold2 ep24  loss=0.1194  score=0.7757 acc=0.8202 dice=0.6719 tau*=0.160 fg=0.525 tg=0.000  (63.8s)
+[hybrid/densenet201+eva_x_base] fold2 ep25  loss=0.0936  score=0.7757 acc=0.8202 dice=0.6719 tau*=0.080 fg=0.520 tg=0.000  (61.3s)
+[hybrid/densenet201+eva_x_base] fold2 ep26  loss=0.1878  score=0.7587 acc=0.7978 dice=0.6674 tau*=0.400 fg=0.520 tg=0.000  (61.4s)
+[hybrid/densenet201+eva_x_base] fold2 ep27  loss=0.1932  score=0.7730 acc=0.8202 dice=0.6629 tau*=0.085 fg=0.518 tg=0.000  (64.2s)
+[hybrid/densenet201+eva_x_base] fold2 ep28  loss=0.2080  score=0.7533 acc=0.7978 dice=0.6494 tau*=0.160 fg=0.512 tg=0.000  (63.7s)
+[hybrid/densenet201+eva_x_base] fold2 ep29  loss=0.2262  score=0.7492 acc=0.7978 dice=0.6360 tau*=0.140 fg=0.512 tg=0.000  (64.1s)
+[hybrid/densenet201+eva_x_base] fold2 SWA  score=0.7600 acc=0.7978 dice=0.6719 tau*=0.695 fg=0.520 tg=0.000
+[hybrid/densenet201+eva_x_base] fold2 BEST: {'score': 0.7968539325842695, 'tau': 0.12, 'acc': 0.8426966292134831, 'dice': 0.6898876404494382, 'fusion_gate_mean': 0.5468510985374451, 'tab_gate_mean': 0.0, 'epoch': 16}  -> /workspace/Code/runs/hybrid_densenet201_eva_x_base_notab/fold2_best.pt
+/workspace/Code/vendor/eva_x.py:180: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  eva_ckpt = checkpoint_filter_fn(torch.load(pretrained, map_location='cpu'),
+<All keys matched successfully>
+[hybrid/densenet201+eva_x_base] fold 3 attempt 0: 107.9M params, train=356 val=88 tabular=False pos_weight=1.253 lr=3.0e-04 enc_mult=0.3 warmup=3
+/workspace/Code/train_hybrid_fused.py:179: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=use_amp)
+[hybrid/densenet201+eva_x_base] fold3 ep00  loss=0.7461  score=0.6486 acc=0.6705 dice=0.5977 tau*=0.675 fg=0.498 tg=0.000  (57.8s)
+[hybrid/densenet201+eva_x_base] fold3 ep01  loss=0.7306  score=0.7214 acc=0.7500 dice=0.6545 tau*=0.755 fg=0.494 tg=0.000  (59.0s)
+[hybrid/densenet201+eva_x_base] fold3 ep02  loss=0.6910  score=0.7264 acc=0.7727 dice=0.6182 tau*=0.400 fg=0.486 tg=0.000  (60.0s)
+[hybrid/densenet201+eva_x_base] fold3 ep03  loss=0.6289  score=0.7477 acc=0.7955 dice=0.6364 tau*=0.365 fg=0.496 tg=0.000  (62.4s)
+[hybrid/densenet201+eva_x_base] fold3 ep04  loss=0.5583  score=0.7427 acc=0.7727 dice=0.6727 tau*=0.630 fg=0.508 tg=0.000  (60.6s)
+[hybrid/densenet201+eva_x_base] fold3 ep05  loss=0.6482  score=0.7400 acc=0.7727 dice=0.6636 tau*=0.705 fg=0.508 tg=0.000  (62.9s)
+[hybrid/densenet201+eva_x_base] fold3 ep06  loss=0.5004  score=0.7814 acc=0.8182 dice=0.6955 tau*=0.805 fg=0.524 tg=0.000  (57.0s)
+[hybrid/densenet201+eva_x_base] fold3 ep07  loss=0.4262  score=0.7618 acc=0.8068 dice=0.6568 tau*=0.820 fg=0.534 tg=0.000  (67.0s)
+[hybrid/densenet201+eva_x_base] fold3 ep08  loss=0.3545  score=0.7732 acc=0.8182 dice=0.6682 tau*=0.670 fg=0.541 tg=0.000  (58.8s)
+[hybrid/densenet201+eva_x_base] fold3 ep09  loss=0.3970  score=0.7573 acc=0.7955 dice=0.6682 tau*=0.665 fg=0.539 tg=0.000  (62.4s)
+[hybrid/densenet201+eva_x_base] fold3 ep10  loss=0.3092  score=0.7345 acc=0.7727 dice=0.6455 tau*=0.660 fg=0.546 tg=0.000  (58.6s)
+[hybrid/densenet201+eva_x_base] fold3 ep11  loss=0.2797  score=0.7459 acc=0.7841 dice=0.6568 tau*=0.785 fg=0.555 tg=0.000  (56.1s)
+[hybrid/densenet201+eva_x_base] fold3 ep12  loss=0.2232  score=0.7273 acc=0.7614 dice=0.6477 tau*=0.790 fg=0.549 tg=0.000  (61.0s)
+[hybrid/densenet201+eva_x_base] fold3 ep13  loss=0.2532  score=0.7023 acc=0.7500 dice=0.5909 tau*=0.090 fg=0.545 tg=0.000  (60.5s)
+[hybrid/densenet201+eva_x_base] fold3 ep14  loss=0.1958  score=0.7109 acc=0.7614 dice=0.5932 tau*=0.590 fg=0.554 tg=0.000  (59.2s)
+[hybrid/densenet201+eva_x_base] fold3 ep15  loss=0.2008  score=0.7359 acc=0.7727 dice=0.6500 tau*=0.385 fg=0.554 tg=0.000  (57.5s)
+[hybrid/densenet201+eva_x_base] fold3 ep16  loss=0.2302  score=0.7250 acc=0.7727 dice=0.6136 tau*=0.280 fg=0.556 tg=0.000  (64.8s)
+[hybrid/densenet201+eva_x_base] fold3 ep17  loss=0.1955  score=0.7405 acc=0.7841 dice=0.6386 tau*=0.190 fg=0.552 tg=0.000  (61.5s)
+[hybrid/densenet201+eva_x_base] fold3 ep18  loss=0.1596  score=0.7123 acc=0.7614 dice=0.5977 tau*=0.055 fg=0.550 tg=0.000  (54.5s)
+[hybrid/densenet201+eva_x_base] fold3 ep19  loss=0.2013  score=0.6900 acc=0.7159 dice=0.6295 tau*=0.765 fg=0.542 tg=0.000  (55.2s)
+[hybrid/densenet201+eva_x_base] fold3 ep20  loss=0.1654  score=0.7386 acc=0.7727 dice=0.6591 tau*=0.940 fg=0.542 tg=0.000  (64.7s)
+[hybrid/densenet201+eva_x_base] fold3 ep21  loss=0.1608  score=0.7400 acc=0.7727 dice=0.6636 tau*=0.950 fg=0.539 tg=0.000  (56.8s)
+[hybrid/densenet201+eva_x_base] fold3 ep22  loss=0.0907  score=0.7491 acc=0.7955 dice=0.6409 tau*=0.160 fg=0.535 tg=0.000  (57.1s)
+[hybrid/densenet201+eva_x_base] fold3 ep23  loss=0.1187  score=0.7377 acc=0.7841 dice=0.6295 tau*=0.090 fg=0.535 tg=0.000  (57.6s)
+[hybrid/densenet201+eva_x_base] fold3 ep24  loss=0.2446  score=0.7364 acc=0.7841 dice=0.6250 tau*=0.085 fg=0.536 tg=0.000  (62.3s)
+[hybrid/densenet201+eva_x_base] fold3 ep25  loss=0.1840  score=0.7486 acc=0.7841 dice=0.6659 tau*=0.875 fg=0.534 tg=0.000  (58.4s)
+[hybrid/densenet201+eva_x_base] fold3 ep26  loss=0.1741  score=0.7559 acc=0.7955 dice=0.6636 tau*=0.855 fg=0.533 tg=0.000  (62.3s)
+[hybrid/densenet201+eva_x_base] fold3 ep27  loss=0.1976  score=0.7473 acc=0.7841 dice=0.6614 tau*=0.855 fg=0.528 tg=0.000  (58.3s)
+[hybrid/densenet201+eva_x_base] fold3 ep28  loss=0.1742  score=0.7559 acc=0.7955 dice=0.6636 tau*=0.565 fg=0.527 tg=0.000  (61.1s)
+[hybrid/densenet201+eva_x_base] fold3 ep29  loss=0.1715  score=0.7559 acc=0.7955 dice=0.6636 tau*=0.855 fg=0.526 tg=0.000  (57.1s)
+[hybrid/densenet201+eva_x_base] fold3 SWA  score=0.7459 acc=0.7841 dice=0.6568 tau*=0.900 fg=0.532 tg=0.000
+[hybrid/densenet201+eva_x_base] fold3 BEST: {'score': 0.7813636363636364, 'tau': 0.8049999999999999, 'acc': 0.8181818181818182, 'dice': 0.6954545454545454, 'fusion_gate_mean': 0.5241484045982361, 'tab_gate_mean': 0.0, 'epoch': 6}  -> /workspace/Code/runs/hybrid_densenet201_eva_x_base_notab/fold3_best.pt
+/workspace/Code/vendor/eva_x.py:180: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  eva_ckpt = checkpoint_filter_fn(torch.load(pretrained, map_location='cpu'),
+<All keys matched successfully>
+[hybrid/densenet201+eva_x_base] fold 4 attempt 0: 107.9M params, train=355 val=89 tabular=False pos_weight=1.247 lr=3.0e-04 enc_mult=0.3 warmup=3
+/workspace/Code/train_hybrid_fused.py:179: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=use_amp)
+[hybrid/densenet201+eva_x_base] fold4 ep00  loss=0.7413  score=0.6742 acc=0.7079 dice=0.5955 tau*=0.535 fg=0.503 tg=0.000  (56.7s)
+[hybrid/densenet201+eva_x_base] fold4 ep01  loss=0.7132  score=0.7070 acc=0.7528 dice=0.6000 tau*=0.605 fg=0.500 tg=0.000  (55.6s)
+[hybrid/densenet201+eva_x_base] fold4 ep02  loss=0.7284  score=0.7402 acc=0.7753 dice=0.6584 tau*=0.485 fg=0.501 tg=0.000  (56.9s)
+[hybrid/densenet201+eva_x_base] fold4 ep03  loss=0.6809  score=0.7739 acc=0.8090 dice=0.6921 tau*=0.625 fg=0.496 tg=0.000  (57.3s)
+[hybrid/densenet201+eva_x_base] fold4 ep04  loss=0.6360  score=0.7654 acc=0.7978 dice=0.6899 tau*=0.675 fg=0.505 tg=0.000  (59.7s)
+[hybrid/densenet201+eva_x_base] fold4 ep05  loss=0.5933  score=0.7753 acc=0.8090 dice=0.6966 tau*=0.550 fg=0.521 tg=0.000  (58.1s)
+[hybrid/densenet201+eva_x_base] fold4 ep06  loss=0.5111  score=0.7667 acc=0.7978 dice=0.6944 tau*=0.880 fg=0.538 tg=0.000  (57.9s)
+[hybrid/densenet201+eva_x_base] fold4 ep07  loss=0.5142  score=0.7488 acc=0.7865 dice=0.6607 tau*=0.415 fg=0.546 tg=0.000  (60.6s)
+[hybrid/densenet201+eva_x_base] fold4 ep08  loss=0.3898  score=0.7371 acc=0.7640 dice=0.6742 tau*=0.900 fg=0.550 tg=0.000  (54.4s)
+[hybrid/densenet201+eva_x_base] fold4 ep09  loss=0.4162  score=0.7528 acc=0.7865 dice=0.6742 tau*=0.860 fg=0.550 tg=0.000  (55.7s)
+[hybrid/densenet201+eva_x_base] fold4 ep10  loss=0.3478  score=0.7667 acc=0.7978 dice=0.6944 tau*=0.830 fg=0.559 tg=0.000  (54.7s)
+[hybrid/densenet201+eva_x_base] fold4 ep11  loss=0.3257  score=0.7357 acc=0.7640 dice=0.6697 tau*=0.690 fg=0.556 tg=0.000  (54.8s)
+[hybrid/densenet201+eva_x_base] fold4 ep12  loss=0.2600  score=0.7582 acc=0.7865 dice=0.6921 tau*=0.765 fg=0.546 tg=0.000  (55.3s)
+[hybrid/densenet201+eva_x_base] fold4 ep13  loss=0.2619  score=0.7236 acc=0.7640 dice=0.6292 tau*=0.795 fg=0.543 tg=0.000  (58.8s)
+[hybrid/densenet201+eva_x_base] fold4 ep14  loss=0.2398  score=0.7088 acc=0.7303 dice=0.6584 tau*=0.950 fg=0.533 tg=0.000  (58.4s)
+[hybrid/densenet201+eva_x_base] fold4 ep15  loss=0.1895  score=0.7357 acc=0.7640 dice=0.6697 tau*=0.950 fg=0.533 tg=0.000  (57.4s)
+[hybrid/densenet201+eva_x_base] fold4 ep16  loss=0.2179  score=0.7160 acc=0.7416 dice=0.6562 tau*=0.935 fg=0.526 tg=0.000  (54.5s)
+[hybrid/densenet201+eva_x_base] fold4 ep17  loss=0.1978  score=0.7402 acc=0.7753 dice=0.6584 tau*=0.835 fg=0.523 tg=0.000  (57.2s)
+[hybrid/densenet201+eva_x_base] fold4 ep18  loss=0.1917  score=0.7011 acc=0.7416 dice=0.6067 tau*=0.385 fg=0.520 tg=0.000  (58.3s)
+[hybrid/densenet201+eva_x_base] fold4 ep19  loss=0.1701  score=0.6998 acc=0.7416 dice=0.6022 tau*=0.255 fg=0.516 tg=0.000  (55.5s)
+[hybrid/densenet201+eva_x_base] fold4 ep20  loss=0.1143  score=0.6966 acc=0.7303 dice=0.6180 tau*=0.885 fg=0.516 tg=0.000  (57.6s)
+[hybrid/densenet201+eva_x_base] fold4 ep21  loss=0.1918  score=0.7344 acc=0.7640 dice=0.6652 tau*=0.940 fg=0.511 tg=0.000  (57.4s)
+[hybrid/densenet201+eva_x_base] fold4 ep22  loss=0.2218  score=0.7047 acc=0.7303 dice=0.6449 tau*=0.950 fg=0.507 tg=0.000  (58.2s)
+[hybrid/densenet201+eva_x_base] fold4 ep23  loss=0.1386  score=0.7456 acc=0.7753 dice=0.6764 tau*=0.950 fg=0.506 tg=0.000  (55.8s)
+[hybrid/densenet201+eva_x_base] fold4 ep24  loss=0.1954  score=0.7151 acc=0.7528 dice=0.6270 tau*=0.690 fg=0.503 tg=0.000  (53.4s)
+[hybrid/densenet201+eva_x_base] fold4 ep25  loss=0.1305  score=0.7097 acc=0.7528 dice=0.6090 tau*=0.265 fg=0.502 tg=0.000  (54.8s)
+[hybrid/densenet201+eva_x_base] fold4 ep26  loss=0.1528  score=0.7528 acc=0.7865 dice=0.6742 tau*=0.715 fg=0.497 tg=0.000  (55.0s)
+[hybrid/densenet201+eva_x_base] fold4 ep27  loss=0.0994  score=0.7097 acc=0.7528 dice=0.6090 tau*=0.100 fg=0.499 tg=0.000  (59.0s)
+[hybrid/densenet201+eva_x_base] fold4 ep28  loss=0.1642  score=0.7402 acc=0.7753 dice=0.6584 tau*=0.785 fg=0.496 tg=0.000  (56.2s)
+[hybrid/densenet201+eva_x_base] fold4 ep29  loss=0.1376  score=0.7258 acc=0.7528 dice=0.6629 tau*=0.950 fg=0.494 tg=0.000  (64.7s)
+[hybrid/densenet201+eva_x_base] fold4 SWA  score=0.7263 acc=0.7640 dice=0.6382 tau*=0.755 fg=0.501 tg=0.000
+[hybrid/densenet201+eva_x_base] fold4 BEST: {'score': 0.7752808988764044, 'tau': 0.5499999999999999, 'acc': 0.8089887640449438, 'dice': 0.6966292134831461, 'fusion_gate_mean': 0.521282434463501, 'tab_gate_mean': 0.0, 'epoch': 5}  -> /workspace/Code/runs/hybrid_densenet201_eva_x_base_notab/fold4_best.pt
+[hybrid/densenet201_eva_x_base_notab] CV mean score=0.7939 +/- 0.0167  (mean fusion_gate=0.531)

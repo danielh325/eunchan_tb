@@ -1,0 +1,21 @@
+/workspace/Code/vendor/chexfound/layers/swiglu_ffn.py:45: UserWarning: xFormers is disabled (SwiGLU)
+  warnings.warn("xFormers is disabled (SwiGLU)")
+/workspace/Code/vendor/chexfound/layers/swiglu_ffn.py:51: UserWarning: xFormers is not available (SwiGLU)
+  warnings.warn("xFormers is not available (SwiGLU)")
+/workspace/Code/vendor/chexfound/layers/attention.py:29: UserWarning: xFormers is disabled (Attention)
+  warnings.warn("xFormers is disabled (Attention)")
+/workspace/Code/vendor/chexfound/layers/attention.py:33: UserWarning: xFormers is not available (Attention)
+  warnings.warn("xFormers is not available (Attention)")
+/workspace/Code/vendor/chexfound/layers/block.py:35: UserWarning: xFormers is disabled (Block)
+  warnings.warn("xFormers is disabled (Block)")
+/workspace/Code/vendor/chexfound/layers/block.py:40: UserWarning: xFormers is not available (Block)
+  warnings.warn("xFormers is not available (Block)")
+loaded /workspace/Code/runs/ordfused_chexfound_vitl16_notab/fold0_best.pt (fold 0, best {'score': 0.8247191011235955, 'tau': 0.575, 'acc': 0.8651685393258427, 'dice': 0.7303370786516854, 'gate_mean': 0.0, 'epoch': 9})
+loaded /workspace/Code/runs/ordfused_chexfound_vitl16_notab/fold1_best.pt (fold 1, best {'score': 0.8444943820224717, 'tau': 0.6449999999999999, 'acc': 0.8876404494382022, 'dice': 0.743820224719101, 'gate_mean': 0.0, 'epoch': 16})
+loaded /workspace/Code/runs/ordfused_chexfound_vitl16_notab/fold2_best.pt (fold 2, best {'score': 0.7658426966292133, 'tau': 0.5249999999999999, 'acc': 0.8089887640449438, 'dice': 0.6651685393258427, 'gate_mean': 0.0, 'epoch': 14})
+loaded /workspace/Code/runs/ordfused_chexfound_vitl16_notab/fold3_best.pt (fold 3, best {'score': 0.7804545454545455, 'tau': 0.3499999999999999, 'acc': 0.8295454545454546, 'dice': 0.6659090909090909, 'gate_mean': 0.0, 'epoch': 6})
+loaded /workspace/Code/runs/ordfused_chexfound_vitl16_notab/fold4_best.pt (fold 4, best {'score': 0.8247191011235955, 'tau': 0.36999999999999994, 'acc': 0.8651685393258427, 'dice': 0.7303370786516854, 'gate_mean': 0.0, 'epoch': 12})
+[ordfused_chexfound_vitl16_notab] OOF tau*=0.530 accuracy=0.8108
+wrote OOF probs to oof/chexfound_vitl16_notab_oof.csv
+[ordfused_chexfound_vitl16_notab] TEST score=0.7438 acc=0.7838 dice=0.6505 (tau from OOF)
+wrote /workspace/Code/../submissions/submission_ordfused_chexfound_vitl16_notab.csv

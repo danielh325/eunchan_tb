@@ -1,0 +1,19 @@
+# Task 1 densenet201-lungcrop experiment -- built FROM the existing shared
+# lisa-task1:latest image plus one addition (torchxrayvision, for the
+# lung-segmentation model used by lung_crop.py, ported from Task2's
+# Dockerfile_final which uses the same pin). Kept as a separate image/tag so
+# this experiment never touches the shared image every other Task1 job
+# (baseline/other_cnns/ordfused*/hybrid_fused) already depends on.
+FROM lisa-task1:latest
+
+RUN pip-retry torchxrayvision==1.3.4
+
+# torchxrayvision pulls in plain `opencv-python` (not `-headless`) as a
+# transitive dep. Both packages write into the same cv2/ site-packages path,
+# so this install silently overwrote the base image's opencv-python-headless
+# with a build that needs libGL.so.1 -- absent in this CUDA devel image (no
+# X11/display libs), which broke every later `import cv2` in common.py/train.py
+# with "ImportError: libGL.so.1: cannot open shared object file". Force
+# headless back to being the one that's actually on disk.
+RUN pip uninstall -y opencv-python opencv-python-headless && \
+    pip-retry opencv-python-headless==4.10.0.84

@@ -1,0 +1,199 @@
+OrdFused encoder=eva_x_base tabular=True device=cuda tab_dim=5 fold_arg=all
+cavity  large  medium  none  small
+fold                              
+0          12      12    49     16
+1          11      13    49     16
+2          11      13    50     15
+3          11      12    49     16
+4          12      11    50     16
+/workspace/Code/vendor/eva_x.py:180: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  eva_ckpt = checkpoint_filter_fn(torch.load(pretrained, map_location='cpu'),
+<All keys matched successfully>
+[ordfused/eva_x_base] fold 0 attempt 0: 87.7M params, train=355 val=89 tabular=True pos_weight=1.261 lr=3.0e-04 enc_mult=0.3 warmup=3
+/workspace/Code/train_ordfused.py:204: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=use_amp)
+[ordfused/eva_x_base] fold0 ep00  loss=0.7847  score=0.5856 acc=0.6180 dice=0.5101 tau*=0.615 g=0.582  (44.2s)
+[ordfused/eva_x_base] fold0 ep01  loss=0.7434  score=0.6279 acc=0.6629 dice=0.5461 tau*=0.540 g=0.708  (47.1s)
+[ordfused/eva_x_base] fold0 ep02  loss=0.7082  score=0.6755 acc=0.7079 dice=0.6000 tau*=0.550 g=0.818  (51.1s)
+[ordfused/eva_x_base] fold0 ep03  loss=0.6931  score=0.7137 acc=0.7528 dice=0.6225 tau*=0.520 g=0.830  (46.4s)
+[ordfused/eva_x_base] fold0 ep04  loss=0.6782  score=0.7249 acc=0.7640 dice=0.6337 tau*=0.535 g=0.810  (39.3s)
+[ordfused/eva_x_base] fold0 ep05  loss=0.6641  score=0.7420 acc=0.7865 dice=0.6382 tau*=0.470 g=0.788  (44.0s)
+[ordfused/eva_x_base] fold0 ep06  loss=0.6495  score=0.7515 acc=0.7865 dice=0.6697 tau*=0.605 g=0.792  (41.7s)
+[ordfused/eva_x_base] fold0 ep07  loss=0.6107  score=0.7753 acc=0.8090 dice=0.6966 tau*=0.675 g=0.802  (39.3s)
+[ordfused/eva_x_base] fold0 ep08  loss=0.5920  score=0.7757 acc=0.8202 dice=0.6719 tau*=0.620 g=0.763  (41.6s)
+[ordfused/eva_x_base] fold0 ep09  loss=0.5712  score=0.7856 acc=0.8315 dice=0.6787 tau*=0.530 g=0.697  (45.5s)
+[ordfused/eva_x_base] fold0 ep10  loss=0.5351  score=0.7969 acc=0.8427 dice=0.6899 tau*=0.515 g=0.705  (46.6s)
+[ordfused/eva_x_base] fold0 ep11  loss=0.5296  score=0.7811 acc=0.8202 dice=0.6899 tau*=0.565 g=0.721  (46.2s)
+[ordfused/eva_x_base] fold0 ep12  loss=0.5147  score=0.7910 acc=0.8315 dice=0.6966 tau*=0.505 g=0.793  (32.3s)
+[ordfused/eva_x_base] fold0 ep13  loss=0.5032  score=0.7910 acc=0.8315 dice=0.6966 tau*=0.685 g=0.694  (32.9s)
+[ordfused/eva_x_base] fold0 ep14  loss=0.4129  score=0.7955 acc=0.8427 dice=0.6854 tau*=0.425 g=0.702  (32.2s)
+[ordfused/eva_x_base] fold0 ep15  loss=0.4629  score=0.8049 acc=0.8427 dice=0.7169 tau*=0.740 g=0.663  (36.3s)
+[ordfused/eva_x_base] fold0 ep16  loss=0.4245  score=0.7996 acc=0.8427 dice=0.6989 tau*=0.575 g=0.673  (41.2s)
+[ordfused/eva_x_base] fold0 ep17  loss=0.4350  score=0.8148 acc=0.8539 dice=0.7236 tau*=0.785 g=0.623  (35.2s)
+[ordfused/eva_x_base] fold0 ep18  loss=0.4086  score=0.8049 acc=0.8427 dice=0.7169 tau*=0.630 g=0.665  (42.6s)
+[ordfused/eva_x_base] fold0 ep19  loss=0.3324  score=0.7951 acc=0.8315 dice=0.7101 tau*=0.750 g=0.586  (34.2s)
+[ordfused/eva_x_base] fold0 ep20  loss=0.3551  score=0.8148 acc=0.8539 dice=0.7236 tau*=0.830 g=0.588  (35.0s)
+[ordfused/eva_x_base] fold0 ep21  loss=0.3499  score=0.8148 acc=0.8539 dice=0.7236 tau*=0.765 g=0.532  (31.9s)
+[ordfused/eva_x_base] fold0 ep22  loss=0.3038  score=0.8036 acc=0.8427 dice=0.7124 tau*=0.745 g=0.607  (35.1s)
+[ordfused/eva_x_base] fold0 ep23  loss=0.3115  score=0.8036 acc=0.8427 dice=0.7124 tau*=0.705 g=0.512  (33.7s)
+[ordfused/eva_x_base] fold0 ep24  loss=0.3324  score=0.8148 acc=0.8539 dice=0.7236 tau*=0.700 g=0.566  (34.9s)
+[ordfused/eva_x_base] fold0 ep25  loss=0.2824  score=0.8049 acc=0.8427 dice=0.7169 tau*=0.750 g=0.590  (34.6s)
+[ordfused/eva_x_base] fold0 ep26  loss=0.2864  score=0.8148 acc=0.8539 dice=0.7236 tau*=0.740 g=0.555  (35.4s)
+[ordfused/eva_x_base] fold0 ep27  loss=0.2685  score=0.8049 acc=0.8427 dice=0.7169 tau*=0.775 g=0.557  (36.2s)
+[ordfused/eva_x_base] fold0 ep28  loss=0.3093  score=0.7955 acc=0.8427 dice=0.6854 tau*=0.355 g=0.542  (32.2s)
+[ordfused/eva_x_base] fold0 ep29  loss=0.2561  score=0.8049 acc=0.8427 dice=0.7169 tau*=0.805 g=0.547  (33.3s)
+[ordfused/eva_x_base] fold0 SWA  score=0.8049 acc=0.8427 dice=0.7169 tau*=0.770 g=0.562
+[ordfused/eva_x_base] fold0 BEST: {'score': 0.8148314606741573, 'tau': 0.7849999999999999, 'acc': 0.8539325842696629, 'dice': 0.7235955056179776, 'gate_mean': 0.6232022643089294, 'epoch': 17}  -> /workspace/Code/runs/ordfused_eva_x_base/fold0_best.pt
+/workspace/Code/vendor/eva_x.py:180: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  eva_ckpt = checkpoint_filter_fn(torch.load(pretrained, map_location='cpu'),
+<All keys matched successfully>
+[ordfused/eva_x_base] fold 1 attempt 0: 87.7M params, train=355 val=89 tabular=True pos_weight=1.261 lr=3.0e-04 enc_mult=0.3 warmup=3
+/workspace/Code/train_ordfused.py:204: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=use_amp)
+[ordfused/eva_x_base] fold1 ep00  loss=0.7382  score=0.5703 acc=0.5730 dice=0.5640 tau*=0.480 g=0.446  (25.6s)
+[ordfused/eva_x_base] fold1 ep01  loss=0.7291  score=0.5978 acc=0.6180 dice=0.5506 tau*=0.520 g=0.540  (33.0s)
+[ordfused/eva_x_base] fold1 ep02  loss=0.7192  score=0.7020 acc=0.7303 dice=0.6360 tau*=0.555 g=0.604  (37.5s)
+[ordfused/eva_x_base] fold1 ep03  loss=0.6832  score=0.7560 acc=0.7978 dice=0.6584 tau*=0.505 g=0.740  (36.6s)
+[ordfused/eva_x_base] fold1 ep04  loss=0.6713  score=0.7951 acc=0.8315 dice=0.7101 tau*=0.585 g=0.805  (38.0s)
+[ordfused/eva_x_base] fold1 ep05  loss=0.6269  score=0.8049 acc=0.8427 dice=0.7169 tau*=0.575 g=0.884  (37.7s)
+[ordfused/eva_x_base] fold1 ep06  loss=0.5865  score=0.8036 acc=0.8427 dice=0.7124 tau*=0.590 g=0.910  (37.7s)
+[ordfused/eva_x_base] fold1 ep07  loss=0.5832  score=0.8220 acc=0.8652 dice=0.7213 tau*=0.600 g=0.910  (29.6s)
+[ordfused/eva_x_base] fold1 ep08  loss=0.5587  score=0.8166 acc=0.8652 dice=0.7034 tau*=0.345 g=0.907  (39.6s)
+[ordfused/eva_x_base] fold1 ep09  loss=0.5592  score=0.8220 acc=0.8652 dice=0.7213 tau*=0.535 g=0.891  (29.9s)
+[ordfused/eva_x_base] fold1 ep10  loss=0.5043  score=0.8319 acc=0.8764 dice=0.7281 tau*=0.510 g=0.890  (32.0s)
+[ordfused/eva_x_base] fold1 ep11  loss=0.4852  score=0.8193 acc=0.8652 dice=0.7124 tau*=0.620 g=0.859  (40.4s)
+[ordfused/eva_x_base] fold1 ep12  loss=0.4971  score=0.8180 acc=0.8652 dice=0.7079 tau*=0.640 g=0.774  (29.3s)
+[ordfused/eva_x_base] fold1 ep13  loss=0.4511  score=0.8067 acc=0.8539 dice=0.6966 tau*=0.655 g=0.749  (28.6s)
+[ordfused/eva_x_base] fold1 ep14  loss=0.4257  score=0.8306 acc=0.8764 dice=0.7236 tau*=0.600 g=0.615  (30.2s)
+[ordfused/eva_x_base] fold1 ep15  loss=0.4295  score=0.8319 acc=0.8764 dice=0.7281 tau*=0.680 g=0.729  (28.8s)
+[ordfused/eva_x_base] fold1 ep16  loss=0.3684  score=0.8404 acc=0.8876 dice=0.7303 tau*=0.440 g=0.710  (28.0s)
+[ordfused/eva_x_base] fold1 ep17  loss=0.3674  score=0.8306 acc=0.8764 dice=0.7236 tau*=0.550 g=0.710  (35.9s)
+[ordfused/eva_x_base] fold1 ep18  loss=0.3506  score=0.8404 acc=0.8876 dice=0.7303 tau*=0.575 g=0.678  (30.4s)
+[ordfused/eva_x_base] fold1 ep19  loss=0.3413  score=0.8306 acc=0.8764 dice=0.7236 tau*=0.590 g=0.663  (29.9s)
+[ordfused/eva_x_base] fold1 ep20  loss=0.3554  score=0.8306 acc=0.8764 dice=0.7236 tau*=0.620 g=0.639  (31.6s)
+[ordfused/eva_x_base] fold1 ep21  loss=0.2978  score=0.8207 acc=0.8652 dice=0.7169 tau*=0.680 g=0.598  (28.5s)
+[ordfused/eva_x_base] fold1 ep22  loss=0.3357  score=0.8292 acc=0.8764 dice=0.7191 tau*=0.520 g=0.624  (31.7s)
+[ordfused/eva_x_base] fold1 ep23  loss=0.3114  score=0.8193 acc=0.8652 dice=0.7124 tau*=0.665 g=0.612  (28.2s)
+[ordfused/eva_x_base] fold1 ep24  loss=0.3098  score=0.8292 acc=0.8764 dice=0.7191 tau*=0.545 g=0.652  (31.1s)
+[ordfused/eva_x_base] fold1 ep25  loss=0.3185  score=0.8306 acc=0.8764 dice=0.7236 tau*=0.670 g=0.646  (30.0s)
+[ordfused/eva_x_base] fold1 ep26  loss=0.3431  score=0.8306 acc=0.8764 dice=0.7236 tau*=0.685 g=0.640  (28.2s)
+[ordfused/eva_x_base] fold1 ep27  loss=0.2742  score=0.8306 acc=0.8764 dice=0.7236 tau*=0.645 g=0.625  (27.2s)
+[ordfused/eva_x_base] fold1 ep28  loss=0.2506  score=0.8319 acc=0.8764 dice=0.7281 tau*=0.655 g=0.607  (31.8s)
+[ordfused/eva_x_base] fold1 ep29  loss=0.2554  score=0.8292 acc=0.8764 dice=0.7191 tau*=0.510 g=0.603  (32.7s)
+[ordfused/eva_x_base] fold1 SWA  score=0.8306 acc=0.8764 dice=0.7236 tau*=0.680 g=0.625
+[ordfused/eva_x_base] fold1 BEST: {'score': 0.840449438202247, 'tau': 0.43999999999999995, 'acc': 0.8876404494382022, 'dice': 0.7303370786516854, 'gate_mean': 0.7099353671073914, 'epoch': 16}  -> /workspace/Code/runs/ordfused_eva_x_base/fold1_best.pt
+/workspace/Code/vendor/eva_x.py:180: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  eva_ckpt = checkpoint_filter_fn(torch.load(pretrained, map_location='cpu'),
+<All keys matched successfully>
+[ordfused/eva_x_base] fold 2 attempt 0: 87.7M params, train=355 val=89 tabular=True pos_weight=1.247 lr=3.0e-04 enc_mult=0.3 warmup=3
+/workspace/Code/train_ordfused.py:204: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=use_amp)
+[ordfused/eva_x_base] fold2 ep00  loss=0.7253  score=0.5996 acc=0.6292 dice=0.5303 tau*=0.585 g=0.515  (28.8s)
+[ordfused/eva_x_base] fold2 ep01  loss=0.7127  score=0.6328 acc=0.6517 dice=0.5888 tau*=0.570 g=0.519  (45.5s)
+[ordfused/eva_x_base] fold2 ep02  loss=0.6962  score=0.6715 acc=0.7079 dice=0.5865 tau*=0.515 g=0.595  (47.3s)
+[ordfused/eva_x_base] fold2 ep03  loss=0.6938  score=0.6966 acc=0.7303 dice=0.6180 tau*=0.535 g=0.736  (49.7s)
+[ordfused/eva_x_base] fold2 ep04  loss=0.6588  score=0.7110 acc=0.7528 dice=0.6135 tau*=0.515 g=0.859  (50.2s)
+[ordfused/eva_x_base] fold2 ep05  loss=0.6328  score=0.7348 acc=0.7753 dice=0.6404 tau*=0.525 g=0.932  (46.4s)
+[ordfused/eva_x_base] fold2 ep06  loss=0.6053  score=0.7492 acc=0.7978 dice=0.6360 tau*=0.335 g=0.931  (35.1s)
+[ordfused/eva_x_base] fold2 ep07  loss=0.5620  score=0.7645 acc=0.8090 dice=0.6607 tau*=0.380 g=0.931  (47.7s)
+[ordfused/eva_x_base] fold2 ep08  loss=0.5456  score=0.7843 acc=0.8315 dice=0.6742 tau*=0.395 g=0.935  (45.0s)
+[ordfused/eva_x_base] fold2 ep09  loss=0.5035  score=0.7645 acc=0.8090 dice=0.6607 tau*=0.540 g=0.899  (51.5s)
+[ordfused/eva_x_base] fold2 ep10  loss=0.4879  score=0.7699 acc=0.8090 dice=0.6787 tau*=0.435 g=0.865  (32.7s)
+[ordfused/eva_x_base] fold2 ep11  loss=0.4757  score=0.7685 acc=0.8090 dice=0.6742 tau*=0.635 g=0.801  (38.3s)
+[ordfused/eva_x_base] fold2 ep12  loss=0.4773  score=0.7798 acc=0.8202 dice=0.6854 tau*=0.615 g=0.710  (32.5s)
+[ordfused/eva_x_base] fold2 ep13  loss=0.4783  score=0.7613 acc=0.7978 dice=0.6764 tau*=0.680 g=0.704  (35.5s)
+[ordfused/eva_x_base] fold2 ep14  loss=0.4747  score=0.7645 acc=0.8090 dice=0.6607 tau*=0.625 g=0.675  (30.1s)
+[ordfused/eva_x_base] fold2 ep15  loss=0.4279  score=0.7771 acc=0.8202 dice=0.6764 tau*=0.570 g=0.619  (34.7s)
+[ordfused/eva_x_base] fold2 ep16  loss=0.4319  score=0.7771 acc=0.8202 dice=0.6764 tau*=0.360 g=0.534  (34.3s)
+[ordfused/eva_x_base] fold2 ep17  loss=0.3782  score=0.7870 acc=0.8315 dice=0.6831 tau*=0.360 g=0.605  (33.5s)
+[ordfused/eva_x_base] fold2 ep18  loss=0.3591  score=0.7658 acc=0.8090 dice=0.6652 tau*=0.345 g=0.551  (45.4s)
+[ordfused/eva_x_base] fold2 ep19  loss=0.3573  score=0.7658 acc=0.8090 dice=0.6652 tau*=0.310 g=0.577  (30.1s)
+[ordfused/eva_x_base] fold2 ep20  loss=0.3824  score=0.7600 acc=0.7978 dice=0.6719 tau*=0.645 g=0.604  (34.1s)
+[ordfused/eva_x_base] fold2 ep21  loss=0.2885  score=0.7685 acc=0.8090 dice=0.6742 tau*=0.345 g=0.570  (33.5s)
+[ordfused/eva_x_base] fold2 ep22  loss=0.3079  score=0.7560 acc=0.7978 dice=0.6584 tau*=0.420 g=0.533  (31.6s)
+[ordfused/eva_x_base] fold2 ep23  loss=0.3631  score=0.7631 acc=0.8090 dice=0.6562 tau*=0.175 g=0.482  (32.3s)
+[ordfused/eva_x_base] fold2 ep24  loss=0.2940  score=0.7627 acc=0.7978 dice=0.6809 tau*=0.805 g=0.509  (32.4s)
+[ordfused/eva_x_base] fold2 ep25  loss=0.2253  score=0.7645 acc=0.8090 dice=0.6607 tau*=0.270 g=0.510  (36.5s)
+[ordfused/eva_x_base] fold2 ep26  loss=0.3424  score=0.7560 acc=0.7978 dice=0.6584 tau*=0.315 g=0.533  (34.7s)
+[ordfused/eva_x_base] fold2 ep27  loss=0.3295  score=0.7654 acc=0.7978 dice=0.6899 tau*=0.845 g=0.501  (32.9s)
+[ordfused/eva_x_base] fold2 ep28  loss=0.3243  score=0.7654 acc=0.7978 dice=0.6899 tau*=0.855 g=0.496  (37.8s)
+[ordfused/eva_x_base] fold2 ep29  loss=0.3539  score=0.7658 acc=0.8090 dice=0.6652 tau*=0.265 g=0.483  (32.9s)
+[ordfused/eva_x_base] fold2 SWA  score=0.7560 acc=0.7978 dice=0.6584 tau*=0.370 g=0.507
+[ordfused/eva_x_base] fold2 BEST: {'score': 0.7869662921348315, 'tau': 0.35999999999999993, 'acc': 0.8314606741573034, 'dice': 0.6831460674157303, 'gate_mean': 0.6052759885787964, 'epoch': 17}  -> /workspace/Code/runs/ordfused_eva_x_base/fold2_best.pt
+/workspace/Code/vendor/eva_x.py:180: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  eva_ckpt = checkpoint_filter_fn(torch.load(pretrained, map_location='cpu'),
+<All keys matched successfully>
+[ordfused/eva_x_base] fold 3 attempt 0: 87.7M params, train=356 val=88 tabular=True pos_weight=1.253 lr=3.0e-04 enc_mult=0.3 warmup=3
+/workspace/Code/train_ordfused.py:204: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=use_amp)
+[ordfused/eva_x_base] fold3 ep00  loss=0.7808  score=0.5568 acc=0.5568 dice=0.5568 tau*=0.950 g=0.502  (29.4s)
+[ordfused/eva_x_base] fold3 ep01  loss=0.7387  score=0.5568 acc=0.5568 dice=0.5568 tau*=0.950 g=0.479  (47.2s)
+[ordfused/eva_x_base] fold3 ep02  loss=0.7010  score=0.5914 acc=0.6023 dice=0.5659 tau*=0.610 g=0.646  (33.4s)
+[ordfused/eva_x_base] fold3 ep03  loss=0.6886  score=0.6545 acc=0.6818 dice=0.5909 tau*=0.575 g=0.665  (44.2s)
+[ordfused/eva_x_base] fold3 ep04  loss=0.6575  score=0.6700 acc=0.6932 dice=0.6159 tau*=0.565 g=0.859  (47.3s)
+[ordfused/eva_x_base] fold3 ep05  loss=0.6538  score=0.7227 acc=0.7500 dice=0.6591 tau*=0.710 g=0.742  (48.8s)
+[ordfused/eva_x_base] fold3 ep06  loss=0.6030  score=0.7300 acc=0.7614 dice=0.6568 tau*=0.625 g=0.703  (51.5s)
+[ordfused/eva_x_base] fold3 ep07  loss=0.5832  score=0.7627 acc=0.7955 dice=0.6864 tau*=0.735 g=0.599  (50.5s)
+[ordfused/eva_x_base] fold3 ep08  loss=0.5444  score=0.7655 acc=0.7955 dice=0.6955 tau*=0.770 g=0.748  (45.9s)
+[ordfused/eva_x_base] fold3 ep09  loss=0.5631  score=0.7841 acc=0.8182 dice=0.7045 tau*=0.780 g=0.598  (46.6s)
+[ordfused/eva_x_base] fold3 ep10  loss=0.5411  score=0.7841 acc=0.8182 dice=0.7045 tau*=0.835 g=0.647  (42.8s)
+[ordfused/eva_x_base] fold3 ep11  loss=0.5276  score=0.7814 acc=0.8182 dice=0.6955 tau*=0.730 g=0.584  (34.0s)
+[ordfused/eva_x_base] fold3 ep12  loss=0.5035  score=0.7900 acc=0.8295 dice=0.6977 tau*=0.780 g=0.618  (32.1s)
+[ordfused/eva_x_base] fold3 ep13  loss=0.4835  score=0.7941 acc=0.8295 dice=0.7114 tau*=0.720 g=0.682  (49.0s)
+[ordfused/eva_x_base] fold3 ep14  loss=0.4706  score=0.7941 acc=0.8295 dice=0.7114 tau*=0.815 g=0.639  (45.4s)
+[ordfused/eva_x_base] fold3 ep15  loss=0.4527  score=0.7627 acc=0.7955 dice=0.6864 tau*=0.680 g=0.655  (34.4s)
+[ordfused/eva_x_base] fold3 ep16  loss=0.4499  score=0.7586 acc=0.7955 dice=0.6727 tau*=0.825 g=0.511  (32.4s)
+[ordfused/eva_x_base] fold3 ep17  loss=0.4206  score=0.7573 acc=0.7955 dice=0.6682 tau*=0.705 g=0.619  (33.3s)
+[ordfused/eva_x_base] fold3 ep18  loss=0.4156  score=0.7573 acc=0.7955 dice=0.6682 tau*=0.800 g=0.590  (34.5s)
+[ordfused/eva_x_base] fold3 ep19  loss=0.3757  score=0.7532 acc=0.7955 dice=0.6545 tau*=0.655 g=0.522  (35.8s)
+[ordfused/eva_x_base] fold3 ep20  loss=0.3509  score=0.7627 acc=0.7955 dice=0.6864 tau*=0.885 g=0.611  (31.3s)
+[ordfused/eva_x_base] fold3 ep21  loss=0.3354  score=0.7573 acc=0.7955 dice=0.6682 tau*=0.820 g=0.590  (31.5s)
+[ordfused/eva_x_base] fold3 ep22  loss=0.3051  score=0.7473 acc=0.7841 dice=0.6614 tau*=0.795 g=0.625  (33.4s)
+[ordfused/eva_x_base] fold3 ep23  loss=0.3142  score=0.7514 acc=0.7841 dice=0.6750 tau*=0.935 g=0.557  (32.4s)
+[ordfused/eva_x_base] fold3 ep24  loss=0.3497  score=0.7459 acc=0.7841 dice=0.6568 tau*=0.815 g=0.587  (30.7s)
+[ordfused/eva_x_base] fold3 ep25  loss=0.3446  score=0.7427 acc=0.7727 dice=0.6727 tau*=0.915 g=0.603  (36.0s)
+[ordfused/eva_x_base] fold3 ep26  loss=0.3360  score=0.7364 acc=0.7841 dice=0.6250 tau*=0.465 g=0.589  (34.6s)
+[ordfused/eva_x_base] fold3 ep27  loss=0.3376  score=0.7414 acc=0.7727 dice=0.6682 tau*=0.935 g=0.581  (35.8s)
+[ordfused/eva_x_base] fold3 ep28  loss=0.3108  score=0.7414 acc=0.7727 dice=0.6682 tau*=0.915 g=0.606  (31.6s)
+[ordfused/eva_x_base] fold3 ep29  loss=0.3379  score=0.7414 acc=0.7727 dice=0.6682 tau*=0.930 g=0.569  (30.6s)
+[ordfused/eva_x_base] fold3 SWA  score=0.7459 acc=0.7841 dice=0.6568 tau*=0.820 g=0.592
+[ordfused/eva_x_base] fold3 BEST: {'score': 0.7940909090909091, 'tau': 0.72, 'acc': 0.8295454545454546, 'dice': 0.7113636363636364, 'gate_mean': 0.6821239590644836, 'epoch': 13}  -> /workspace/Code/runs/ordfused_eva_x_base/fold3_best.pt
+/workspace/Code/vendor/eva_x.py:180: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  eva_ckpt = checkpoint_filter_fn(torch.load(pretrained, map_location='cpu'),
+<All keys matched successfully>
+[ordfused/eva_x_base] fold 4 attempt 0: 87.7M params, train=355 val=89 tabular=True pos_weight=1.247 lr=3.0e-04 enc_mult=0.3 warmup=3
+/workspace/Code/train_ordfused.py:204: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=use_amp)
+[ordfused/eva_x_base] fold4 ep00  loss=0.7290  score=0.5618 acc=0.5618 dice=0.5618 tau*=0.950 g=0.542  (29.7s)
+[ordfused/eva_x_base] fold4 ep01  loss=0.7049  score=0.5676 acc=0.5730 dice=0.5551 tau*=0.575 g=0.638  (44.1s)
+[ordfused/eva_x_base] fold4 ep02  loss=0.7010  score=0.5888 acc=0.5955 dice=0.5730 tau*=0.575 g=0.661  (38.0s)
+[ordfused/eva_x_base] fold4 ep03  loss=0.7047  score=0.6485 acc=0.6742 dice=0.5888 tau*=0.540 g=0.702  (40.2s)
+[ordfused/eva_x_base] fold4 ep04  loss=0.6605  score=0.6809 acc=0.7079 dice=0.6180 tau*=0.590 g=0.803  (37.0s)
+[ordfused/eva_x_base] fold4 ep05  loss=0.6507  score=0.6980 acc=0.7303 dice=0.6225 tau*=0.565 g=0.846  (42.5s)
+[ordfused/eva_x_base] fold4 ep06  loss=0.6091  score=0.7276 acc=0.7640 dice=0.6427 tau*=0.530 g=0.841  (45.2s)
+[ordfused/eva_x_base] fold4 ep07  loss=0.5868  score=0.7290 acc=0.7640 dice=0.6472 tau*=0.600 g=0.847  (42.1s)
+[ordfused/eva_x_base] fold4 ep08  loss=0.5519  score=0.7443 acc=0.7753 dice=0.6719 tau*=0.660 g=0.871  (45.0s)
+[ordfused/eva_x_base] fold4 ep09  loss=0.5274  score=0.7488 acc=0.7865 dice=0.6607 tau*=0.600 g=0.888  (44.3s)
+[ordfused/eva_x_base] fold4 ep10  loss=0.5016  score=0.7542 acc=0.7865 dice=0.6787 tau*=0.655 g=0.871  (41.6s)
+[ordfused/eva_x_base] fold4 ep11  loss=0.4827  score=0.7667 acc=0.7978 dice=0.6944 tau*=0.635 g=0.799  (39.1s)
+[ordfused/eva_x_base] fold4 ep12  loss=0.4641  score=0.7667 acc=0.7978 dice=0.6944 tau*=0.750 g=0.761  (41.3s)
+[ordfused/eva_x_base] fold4 ep13  loss=0.4614  score=0.7667 acc=0.7978 dice=0.6944 tau*=0.705 g=0.876  (30.9s)
+[ordfused/eva_x_base] fold4 ep14  loss=0.4460  score=0.7667 acc=0.7978 dice=0.6944 tau*=0.665 g=0.864  (28.7s)
+[ordfused/eva_x_base] fold4 ep15  loss=0.4122  score=0.7483 acc=0.7753 dice=0.6854 tau*=0.910 g=0.852  (28.9s)
+[ordfused/eva_x_base] fold4 ep16  loss=0.4104  score=0.7667 acc=0.7978 dice=0.6944 tau*=0.665 g=0.814  (29.4s)
+[ordfused/eva_x_base] fold4 ep17  loss=0.3713  score=0.7483 acc=0.7753 dice=0.6854 tau*=0.870 g=0.774  (28.6s)
+[ordfused/eva_x_base] fold4 ep18  loss=0.3655  score=0.7497 acc=0.7753 dice=0.6899 tau*=0.920 g=0.812  (29.9s)
+[ordfused/eva_x_base] fold4 ep19  loss=0.3189  score=0.7497 acc=0.7753 dice=0.6899 tau*=0.900 g=0.786  (30.5s)
+[ordfused/eva_x_base] fold4 ep20  loss=0.2932  score=0.7587 acc=0.7978 dice=0.6674 tau*=0.645 g=0.781  (31.8s)
+[ordfused/eva_x_base] fold4 ep21  loss=0.3472  score=0.7497 acc=0.7753 dice=0.6899 tau*=0.875 g=0.784  (30.8s)
+[ordfused/eva_x_base] fold4 ep22  loss=0.3584  score=0.7596 acc=0.7865 dice=0.6966 tau*=0.835 g=0.782  (28.9s)
+[ordfused/eva_x_base] fold4 ep23  loss=0.2879  score=0.7497 acc=0.7753 dice=0.6899 tau*=0.910 g=0.749  (30.4s)
+[ordfused/eva_x_base] fold4 ep24  loss=0.3058  score=0.7587 acc=0.7978 dice=0.6674 tau*=0.565 g=0.776  (27.7s)
+[ordfused/eva_x_base] fold4 ep25  loss=0.2798  score=0.7573 acc=0.7978 dice=0.6629 tau*=0.550 g=0.735  (31.2s)
+[ordfused/eva_x_base] fold4 ep26  loss=0.3205  score=0.7560 acc=0.7978 dice=0.6584 tau*=0.505 g=0.716  (30.8s)
+[ordfused/eva_x_base] fold4 ep27  loss=0.2455  score=0.7573 acc=0.7978 dice=0.6629 tau*=0.525 g=0.718  (31.8s)
+[ordfused/eva_x_base] fold4 ep28  loss=0.3192  score=0.7573 acc=0.7978 dice=0.6629 tau*=0.585 g=0.744  (30.4s)
+[ordfused/eva_x_base] fold4 ep29  loss=0.2614  score=0.7461 acc=0.7865 dice=0.6517 tau*=0.510 g=0.745  (27.6s)
+[ordfused/eva_x_base] fold4 SWA  score=0.7488 acc=0.7865 dice=0.6607 tau*=0.600 g=0.747
+[ordfused/eva_x_base] fold4 BEST: {'score': 0.7667415730337077, 'tau': 0.635, 'acc': 0.797752808988764, 'dice': 0.69438202247191, 'gate_mean': 0.7988338470458984, 'epoch': 11}  -> /workspace/Code/runs/ordfused_eva_x_base/fold4_best.pt
+[ordfused/eva_x_base] CV mean score=0.8006 +/- 0.0281  (mean gate=0.684)

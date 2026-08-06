@@ -1,0 +1,8 @@
+loaded /workspace/Code/runs/ordfused_tf_efficientnetv2_s_notab/fold0_best.pt (fold 0, best {'score': 0.7667415730337077, 'tau': 0.945, 'acc': 0.797752808988764, 'dice': 0.69438202247191, 'gate_mean': 0.0, 'epoch': 23})
+loaded /workspace/Code/runs/ordfused_tf_efficientnetv2_s_notab/fold1_best.pt (fold 1, best {'score': 0.7950561797752809, 'tau': 0.30999999999999994, 'acc': 0.8314606741573034, 'dice': 0.7101123595505618, 'gate_mean': 0.0, 'epoch': 21})
+loaded /workspace/Code/runs/ordfused_tf_efficientnetv2_s_notab/fold2_best.pt (fold 2, best {'score': 0.7402247191011236, 'tau': 0.5349999999999999, 'acc': 0.7752808988764045, 'dice': 0.6584269662921348, 'gate_mean': 0.0, 'epoch': 18})
+loaded /workspace/Code/runs/ordfused_tf_efficientnetv2_s_notab/fold3_best.pt (fold 3, best {'score': 0.7713636363636363, 'tau': 0.7699999999999999, 'acc': 0.8068181818181818, 'dice': 0.6886363636363636, 'gate_mean': 0.0, 'epoch': 7})
+loaded /workspace/Code/runs/ordfused_tf_efficientnetv2_s_notab/fold4_best.pt (fold 4, best {'score': 0.762696629213483, 'tau': 0.835, 'acc': 0.797752808988764, 'dice': 0.6808988764044943, 'gate_mean': 0.0, 'epoch': 8})
+[ordfused_tf_efficientnetv2_s_notab] OOF tau*=0.760 score=0.7368
+[ordfused_tf_efficientnetv2_s_notab] TEST score=0.6613 acc=0.6937 dice=0.5856 (tau from OOF)
+wrote /workspace/Code/../submissions/submission_ordfused_tf_efficientnetv2_s_notab.csv

@@ -1,0 +1,8 @@
+loaded runs_lungcrop/densenet201/fold0_best.pt (fold 0, best {'score': 0.8602247191011236, 'tau': 0.7949999999999999, 'acc': 0.9101123595505618, 'dice': 0.7438202247191011, 'epoch': 7})
+loaded runs_lungcrop/densenet201/fold1_best.pt (fold 1, best {'score': 0.7784269662921348, 'tau': 0.095, 'acc': 0.8202247191011236, 'dice': 0.6808988764044944, 'epoch': 12})
+loaded runs_lungcrop/densenet201/fold2_best.pt (fold 2, best {'score': 0.7685393258426965, 'tau': 0.43999999999999995, 'acc': 0.8089887640449438, 'dice': 0.6741573033707865, 'epoch': 10})
+loaded runs_lungcrop/densenet201/fold3_best.pt (fold 3, best {'score': 0.7986363636363636, 'tau': 0.5399999999999999, 'acc': 0.8409090909090909, 'dice': 0.7000000000000001, 'epoch': 13})
+loaded runs_lungcrop/densenet201/fold4_best.pt (fold 4, best {'score': 0.767191011235955, 'tau': 0.8799999999999999, 'acc': 0.8089887640449438, 'dice': 0.6696629213483146, 'epoch': 14})
+[densenet201] OOF tau*=0.480 accuracy=0.7950
+[densenet201] TEST score=0.7960 acc=0.8468 dice=0.6775 (tau from OOF)
+wrote ../submissions/submission_densenet201_lungcrop.csv

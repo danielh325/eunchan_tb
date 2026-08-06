@@ -1,0 +1,43 @@
+# OS / editor cruft
+.DS_Store
+.idea/
+
+# Claude Code session/memory data -- may contain private notes, never in repo
+.claude/
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# graphify build output (regenerable from source)
+graphify-out/
+
+# ---------------------------------------------------------------------------
+# Large binaries and bulk data (checkpoints, weights, raw/preprocessed images,
+# nnU-Net working dirs) -- code, sbatch scripts, CSV summaries, and the paper
+# stay tracked; nothing multi-GB does. See each project's sbatch/fetch*.sh or
+# preprocess*.py to regenerate.
+# ---------------------------------------------------------------------------
+
+# root-level Code/baseline/nnUNetv2 (8.8G: nnU-Net source + its own model store)
+Code/baseline/nnUNetv2/
+
+# Task1
+Task1_0615/Task1/weights/
+Task1_0615/Task1/Data/
+Task1_0615/Task1/Data_lungcrop/
+Task1_0615/Task1/Code/runs/
+Task1_0615/Task1/Code/runs_seg/
+Task1_0615/Task1/Code/runs_lungcrop/
+Task1_0615/Task1/Code/yolo_seg_data/
+Task1_0615/Task1/Code/yolo11n.pt
+Task1_0615/Task1/Code/yolov8m-seg.pt
+
+# Task2
+Task2_0615/Task2/checkpoints/
+Task2_0615/Task2/Data/
+Task2_0615/Task2/Tuberculosis/
+
+# Slurm job logs (large text dumps, regenerable by rerunning the job)
+**/sbatch/*.log

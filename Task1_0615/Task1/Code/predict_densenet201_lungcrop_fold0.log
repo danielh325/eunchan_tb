@@ -1,0 +1,4 @@
+loaded runs_lungcrop/densenet201/fold0_best.pt (fold 0, best {'score': 0.8602247191011236, 'tau': 0.7949999999999999, 'acc': 0.9101123595505618, 'dice': 0.7438202247191011, 'epoch': 7})
+using this fold's own saved tau=0.795 (from its held-out validation slice during training)
+[densenet201_lungcrop_fold0] TEST accuracy=0.7658 (tau from this fold's own training)
+wrote ../submissions/submission_densenet201_lungcrop_fold0.csv

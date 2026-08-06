@@ -1,0 +1,57 @@
+# nnU-Net v2 test/retrain image — separate from Dockerfile_final (the
+# classification image) so rebuilding one never disturbs the other.
+FROM docker.io/pytorch/pytorch:2.5.1-cuda11.8-cudnn9-devel
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN sed -i 's|archive.ubuntu.com|mirror.kakao.com|g; s|security.ubuntu.com|mirror.kakao.com|g' /etc/apt/sources.list && \
+    apt-get update && apt-get install -y --no-install-recommends \
+    wget curl git vim build-essential ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip config set global.index-url https://mirror.kakao.com/pypi/simple/ && \
+    pip config set global.trusted-host mirror.kakao.com && \
+    pip config set global.retries 10 && \
+    pip config set global.timeout 120 && \
+    pip install --no-cache-dir --upgrade pip setuptools wheel
+
+RUN printf '%s\n' \
+    '#!/bin/sh' \
+    'for i in 1 2 3 4 5; do' \
+    '    pip install --no-cache-dir "$@" && exit 0' \
+    '    echo "pip attempt $i failed for: $* -- retrying in 15s..." >&2' \
+    '    sleep 15' \
+    'done' \
+    'echo "pip install failed after 5 attempts: $*" >&2' \
+    'exit 1' \
+    > /usr/local/bin/pip-retry && chmod +x /usr/local/bin/pip-retry
+
+# torch/torchvision come from the base image — do NOT reinstall (see
+# Dockerfile_final's comment on why: the mirror can serve a CPU-only build).
+RUN pip-retry numpy==1.26.4 scipy==1.13.1
+RUN pip-retry pandas==2.2.3 scikit-learn==1.5.2
+RUN pip-retry SimpleITK==2.4.1
+# nnunetv2 pulls in its own deps (acvl-utils, batchgenerators,
+# dynamic-network-architectures, etc.) automatically. batchgenerators
+# transitively requires unittest2, an ancient py2/3 shim that mirror.kakao.com
+# doesn't carry -- and pypi.org isn't reachable through the cluster proxy
+# either, so --extra-index-url alone doesn't fix it. Nothing in nnU-Net
+# actually imports unittest2 at runtime (it's a stray test-only dep of
+# batchgenerators), so satisfy it with a local stub instead of depending on
+# network access: pip sees it already installed and skips resolving it
+# from any index.
+RUN mkdir -p /tmp/unittest2-stub/unittest2 && \
+    printf '%s\n' \
+      'from setuptools import setup' \
+      'setup(name="unittest2", version="1.1.0", packages=["unittest2"])' \
+      > /tmp/unittest2-stub/setup.py && \
+    printf '%s\n' \
+      'from unittest import *' \
+      > /tmp/unittest2-stub/unittest2/__init__.py && \
+    pip install --no-cache-dir --no-build-isolation /tmp/unittest2-stub && \
+    rm -rf /tmp/unittest2-stub
+
+RUN pip-retry nnunetv2==2.5.1
+
+WORKDIR /workspace
+CMD ["/bin/bash"]

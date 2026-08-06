@@ -1,0 +1,88 @@
+# LISA Task 1 — cavity classification + segmentation, SUBMISSION image.
+# Self-contained: no bind mounts, no network access needed at runtime.
+#
+# Classification: densenet201 + tf_efficientnetv2_s + resnet50d + OrdFused
+# (eva_x_base, no-tabular) probability-averaged ensemble, 5 folds each
+# (same 4 members as submission_valid_ensemble_v1.csv -- OOF acc=0.8446,
+# tau*=0.535 -- see task1-classifier-decision memory).
+#
+# Segmentation: RAD-DINO + CheXFound-ViT-L/16 + EVA-X-base decoder ensemble,
+# gated by the classifier (empty mask for predicted-negative cases) --
+# mirrors gate_segmentation.py's discipline but runs end-to-end on arbitrary
+# new images instead of nnU-Net's precomputed validation predictions.
+#
+# TODO: segmentation postprocessing (threshold / connected-component
+# filtering) in predict_task1_submission.py is still a placeholder pending a
+# dev-only grid sweep -- rebuild this image after that lands.
+FROM docker.io/pytorch/pytorch:2.5.1-cuda11.8-cudnn9-devel
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN sed -i 's|archive.ubuntu.com|mirror.kakao.com|g; s|security.ubuntu.com|mirror.kakao.com|g' /etc/apt/sources.list && \
+    apt-get update && apt-get install -y --no-install-recommends \
+    wget curl git ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip config set global.index-url https://mirror.kakao.com/pypi/simple/ && \
+    pip config set global.trusted-host mirror.kakao.com && \
+    pip config set global.retries 10 && \
+    pip config set global.timeout 120 && \
+    pip install --no-cache-dir --upgrade pip setuptools wheel
+
+# torch/torchvision come from the base image -- do NOT reinstall here.
+RUN printf '%s\n' \
+    '#!/bin/sh' \
+    'for i in 1 2 3 4 5; do' \
+    '    pip install --no-cache-dir "$@" && exit 0' \
+    '    echo "pip attempt $i failed for: $* -- retrying in 15s..." >&2' \
+    '    sleep 15' \
+    'done' \
+    'echo "pip install failed after 5 attempts: $*" >&2' \
+    'exit 1' \
+    > /usr/local/bin/pip-retry && chmod +x /usr/local/bin/pip-retry
+
+RUN pip-retry numpy==1.26.4 scipy==1.13.1
+RUN pip-retry pandas==2.2.3 scikit-learn==1.5.2
+RUN pip-retry timm==1.0.15
+RUN pip-retry SimpleITK==2.4.1 opencv-python-headless==4.10.0.84
+RUN pip-retry transformers==4.41.0 huggingface_hub==0.23.4 peft==0.11.1
+ENV XFORMERS_DISABLED=1
+
+WORKDIR /workspace
+
+# --- code -------------------------------------------------------------
+# NOTE: build context is PARENT_ROOT (this repo's Task1_0615's parent dir --
+# see sbatch/build_submission_image.sbatch), NOT Task1_0615/Task1 -- every
+# COPY source below is a full path from that root (same convention Task2's
+# Dockerfile.submission uses and documents).
+COPY Task1_0615/Task1/Code/common.py Task1_0615/Task1/Code/ordfused.py \
+     Task1_0615/Task1/Code/segmentation_model.py \
+     Task1_0615/Task1/Code/predict_task1_submission.py \
+     /workspace/Code/
+COPY Task1_0615/Task1/Code/vendor /workspace/Code/vendor
+
+# --- architecture-shape-only weights -----------------------------------
+# rad_dino at inference (pretrained=False) only needs config.json to build
+# the right architecture shape before load_state_dict -- the original
+# pretrained safetensors are never read (our checkpoints already contain the
+# full trained state), same reasoning Task2's Dockerfile.submission uses.
+# eva_x / chexfound need NO weight files at all with pretrained=False (see
+# ordfused.py's build_encoder -- their pretrained checkpoints are only
+# loaded when pretrained=True).
+COPY Task1_0615/Task1/weights/rad_dino/config.json /workspace/weights/rad_dino/config.json
+ENV ORDFUSED_WEIGHTS_DIR=/workspace/weights
+
+# --- trained checkpoints (the actual models) -----------------------------
+COPY Task1_0615/Task1/Code/runs/densenet201 /workspace/Code/runs/densenet201
+COPY Task1_0615/Task1/Code/runs/tf_efficientnetv2_s /workspace/Code/runs/tf_efficientnetv2_s
+COPY Task1_0615/Task1/Code/runs/resnet50d /workspace/Code/runs/resnet50d
+COPY Task1_0615/Task1/Code/runs/ordfused_eva_x_base_notab /workspace/Code/runs/ordfused_eva_x_base_notab
+
+COPY Task1_0615/Task1/Code/runs_seg/rad_dino/best.pt /workspace/Code/runs_seg/rad_dino/best.pt
+COPY Task1_0615/Task1/Code/runs_seg/chexfound_vitl16/best.pt /workspace/Code/runs_seg/chexfound_vitl16/best.pt
+COPY Task1_0615/Task1/Code/runs_seg/eva_x_base/best.pt /workspace/Code/runs_seg/eva_x_base/best.pt
+
+COPY Task1_0615/Task1/docker_entrypoint.sh /workspace/docker_entrypoint.sh
+RUN chmod +x /workspace/docker_entrypoint.sh
+
+ENTRYPOINT ["/workspace/docker_entrypoint.sh"]

@@ -1,0 +1,9 @@
+loaded /workspace/Code/runs/hybrid_densenet201_eva_x_base_notab/fold0_best.pt (fold 0, best {'score': 0.8179775280898876, 'tau': 0.295, 'acc': 0.8651685393258427, 'dice': 0.7078651685393258, 'fusion_gate_mean': 0.5439214706420898, 'tab_gate_mean': 0.0, 'epoch': 9})
+loaded /workspace/Code/runs/hybrid_densenet201_eva_x_base_notab/fold1_best.pt (fold 1, best {'score': 0.7982022471910111, 'tau': 0.4749999999999999, 'acc': 0.8426966292134831, 'dice': 0.69438202247191, 'fusion_gate_mean': 0.5186524391174316, 'tab_gate_mean': 0.0, 'epoch': 17})
+loaded /workspace/Code/runs/hybrid_densenet201_eva_x_base_notab/fold2_best.pt (fold 2, best {'score': 0.7968539325842695, 'tau': 0.12, 'acc': 0.8426966292134831, 'dice': 0.6898876404494382, 'fusion_gate_mean': 0.5468510985374451, 'tab_gate_mean': 0.0, 'epoch': 16})
+loaded /workspace/Code/runs/hybrid_densenet201_eva_x_base_notab/fold3_best.pt (fold 3, best {'score': 0.7813636363636364, 'tau': 0.8049999999999999, 'acc': 0.8181818181818182, 'dice': 0.6954545454545454, 'fusion_gate_mean': 0.5241484045982361, 'tab_gate_mean': 0.0, 'epoch': 6})
+loaded /workspace/Code/runs/hybrid_densenet201_eva_x_base_notab/fold4_best.pt (fold 4, best {'score': 0.7752808988764044, 'tau': 0.5499999999999999, 'acc': 0.8089887640449438, 'dice': 0.6966292134831461, 'fusion_gate_mean': 0.521282434463501, 'tab_gate_mean': 0.0, 'epoch': 5})
+[hybrid_densenet201_eva_x_base_notab] OOF tau*=0.465 accuracy=0.7928
+wrote OOF probs to oof/hybrid_densenet201_eva_x_base_notab_oof.csv
+[hybrid_densenet201_eva_x_base_notab] TEST score=0.7225 acc=0.7658 dice=0.6216 (tau from OOF)
+wrote /workspace/Code/../submissions/submission_hybrid_densenet201_eva_x_base_notab.csv

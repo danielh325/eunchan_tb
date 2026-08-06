@@ -1,0 +1,8 @@
+loaded /workspace/Code/runs/convnext_tiny/fold0_best.pt (fold 0, best {'score': 0.6269662921348315, 'tau': 0.57, 'acc': 0.6404494382022472, 'dice': 0.5955056179775281, 'epoch': 21})
+loaded /workspace/Code/runs/convnext_tiny/fold1_best.pt (fold 1, best {'score': 0.7316853932584269, 'tau': 0.5599999999999999, 'acc': 0.7640449438202247, 'dice': 0.656179775280899, 'epoch': 12})
+loaded /workspace/Code/runs/convnext_tiny/fold2_best.pt (fold 2, best {'score': 0.5617977528089888, 'tau': 0.95, 'acc': 0.5617977528089888, 'dice': 0.5617977528089888, 'epoch': 0})
+loaded /workspace/Code/runs/convnext_tiny/fold3_best.pt (fold 3, best {'score': 0.5568181818181818, 'tau': 0.95, 'acc': 0.5568181818181818, 'dice': 0.5568181818181818, 'epoch': 0})
+loaded /workspace/Code/runs/convnext_tiny/fold4_best.pt (fold 4, best {'score': 0.684943820224719, 'tau': 0.6649999999999999, 'acc': 0.7078651685393258, 'dice': 0.6314606741573034, 'epoch': 22})
+[convnext_tiny] OOF tau*=0.625 score=0.6207
+[convnext_tiny] TEST score=0.5387 acc=0.5495 dice=0.5135 (tau from OOF)
+wrote /workspace/Code/../submissions/submission_convnext_tiny.csv

@@ -1,0 +1,8 @@
+loaded /workspace/Code/runs/tf_efficientnetv2_s/fold0_best.pt (fold 0, best {'score': 0.8391011235955055, 'tau': 0.21499999999999997, 'acc': 0.8876404494382022, 'dice': 0.7258426966292134, 'epoch': 23})
+loaded /workspace/Code/runs/tf_efficientnetv2_s/fold1_best.pt (fold 1, best {'score': 0.8035955056179774, 'tau': 0.835, 'acc': 0.8426966292134831, 'dice': 0.7123595505617978, 'epoch': 9})
+loaded /workspace/Code/runs/tf_efficientnetv2_s/fold2_best.pt (fold 2, best {'score': 0.7982022471910111, 'tau': 0.4149999999999999, 'acc': 0.8426966292134831, 'dice': 0.69438202247191, 'epoch': 2})
+loaded /workspace/Code/runs/tf_efficientnetv2_s/fold3_best.pt (fold 3, best {'score': 0.7986363636363636, 'tau': 0.73, 'acc': 0.8409090909090909, 'dice': 0.7000000000000001, 'epoch': 19})
+loaded /workspace/Code/runs/tf_efficientnetv2_s/fold4_best.pt (fold 4, best {'score': 0.8080898876404494, 'tau': 0.21999999999999997, 'acc': 0.8539325842696629, 'dice': 0.701123595505618, 'epoch': 20})
+[tf_efficientnetv2_s] OOF tau*=0.495 score=0.7822
+[tf_efficientnetv2_s] TEST score=0.7712 acc=0.8198 dice=0.6577 (tau from OOF)
+wrote /workspace/Code/../submissions/submission_tf_efficientnetv2_s.csv

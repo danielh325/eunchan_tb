@@ -1,0 +1,91 @@
+# LISA Task 1a — 2D pretrained backbone pipeline
+# torch 2.5.1 + cu118 devel: compatible with cluster driver 535.183.01 and RTX 3090/A6000 (sm_86)
+FROM docker.io/pytorch/pytorch:2.5.1-cuda11.8-cudnn9-devel
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+# No proxy: gpu101 already has direct internet egress (confirmed — the FROM
+# pull above succeeds without one), and the internal proxy at 192.168.45.108
+# was dropping/rejecting apt & pip's requests. mirror.kakao.com is a public
+# mirror anyway, so hitting it directly is both simpler and faster than
+# bouncing through that proxy.
+
+# Kakao mirror for apt (much faster from Korea)
+RUN sed -i 's|archive.ubuntu.com|mirror.kakao.com|g; s|security.ubuntu.com|mirror.kakao.com|g' /etc/apt/sources.list && \
+    apt-get update && apt-get install -y --no-install-recommends \
+    wget \
+    curl \
+    git \
+    vim \
+    build-essential \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Kakao PyPI mirror + resilient network settings (proxy occasionally drops mid-download)
+RUN pip config set global.index-url https://mirror.kakao.com/pypi/simple/ && \
+    pip config set global.trusted-host mirror.kakao.com && \
+    pip config set global.retries 10 && \
+    pip config set global.timeout 120 && \
+    pip install --no-cache-dir --upgrade pip setuptools wheel
+
+# torch/torchvision come from the base image — do NOT reinstall them here,
+# or pip may pull a CPU-only or mismatched-CUDA build from the mirror.
+# The proxy drops long downloads (IncompleteRead), so: install in small groups,
+# each in its own layer (a failed group doesn't lose the previous ones to the
+# cache), and retry each group up to 5x.
+RUN printf '%s\n' \
+    '#!/bin/sh' \
+    'for i in 1 2 3 4 5; do' \
+    '    pip install --no-cache-dir "$@" && exit 0' \
+    '    echo "pip attempt $i failed for: $* -- retrying in 15s..." >&2' \
+    '    sleep 15' \
+    'done' \
+    'echo "pip install failed after 5 attempts: $*" >&2' \
+    'exit 1' \
+    > /usr/local/bin/pip-retry && chmod +x /usr/local/bin/pip-retry
+
+# Heavy scientific wheels first, one group per layer
+RUN pip-retry numpy==1.26.4 scipy==1.13.1
+RUN pip-retry pandas==2.2.3 scikit-learn==1.5.2
+RUN pip-retry timm==1.0.15 nibabel==5.3.2 torchio==0.20.4 monai==1.4.0
+RUN pip-retry tqdm==4.67.1 matplotlib==3.9.2 seaborn==0.13.2
+RUN pip-retry ipykernel==6.29.5 ipywidgets==8.1.5 jupyterlab==4.3.4
+# Task 1 CXR pipeline: SimpleITK-first image/mask loading (geometry-safe
+# vs. pydicom+nibabel) + CLAHE preprocessing. Baked in here so the sbatch
+# jobs don't need a runtime `pip install` through the flaky proxy.
+RUN pip-retry SimpleITK==2.4.1 opencv-python-headless==4.10.0.84
+
+# OrdFused foundation encoders (EVA-X, RAD-DINO, CheXFound): frozen backbone +
+# LoRA. Checkpoints themselves are NOT baked in here — they're downloaded once
+# on the host (sbatch/fetch_foundation_weights.sh) into Task1/weights/, which
+# is bind-mounted into the container, since runtime network access inside
+# `docker run` is unconfirmed on this cluster. XFORMERS_DISABLED makes the
+# vendored CheXFound/EVA-X attention code fall back to plain PyTorch attention
+# so no xFormers build/install is needed at all.
+RUN pip-retry transformers==4.41.0 huggingface_hub==0.23.4 peft==0.11.1 gdown==5.2.0
+ENV XFORMERS_DISABLED=1
+
+# YOLOv8-seg: second segmentation architecture family (box/instance-based,
+# vs. nnU-Net/foundation-decoder's dense pixel-wise prediction) to ensemble
+# for real architectural diversity -- see prepare_yolo_seg_data.py /
+# train_yolo_seg.py. Pinned below the numpy 2.x line ultralytics >=8.3.4
+# would otherwise pull in, since the rest of this image (and every checkpoint
+# trained under it) assumes numpy==1.26.4 pinned above.
+RUN pip-retry "ultralytics==8.3.28" "numpy==1.26.4"
+
+# ultralytics pulls in plain `opencv-python` (not `-headless`) as a
+# dependency. Both packages write into the same cv2/ site-packages path, so
+# this silently overwrites the opencv-python-headless installed above with a
+# build that needs libGL.so.1 -- absent in this CUDA devel image (no
+# X11/display libs), which breaks every later `import cv2` in common.py and
+# everything that imports it (train.py, prepare_yolo_seg_data.py, etc.) with
+# "ImportError: libGL.so.1: cannot open shared object file". Confirmed this
+# exact failure mode with torchxrayvision (a different package with the same
+# opencv-python dependency) in Dockerfile_lungcrop -- force headless back to
+# being the one that's actually on disk.
+RUN pip uninstall -y opencv-python opencv-python-headless && \
+    pip-retry opencv-python-headless==4.10.0.84
+
+WORKDIR /workspace
+
+CMD ["/bin/bash"]

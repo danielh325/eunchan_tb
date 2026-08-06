@@ -1,0 +1,8 @@
+loaded /workspace/Code/runs/ordfused_densenet201/fold0_best.pt (fold 0, best {'score': 0.851685393258427, 'tau': 0.6499999999999999, 'acc': 0.898876404494382, 'dice': 0.7415730337078652, 'gate_mean': 0.28241389989852905, 'epoch': 7})
+loaded /workspace/Code/runs/ordfused_densenet201/fold1_best.pt (fold 1, best {'score': 0.8134831460674157, 'tau': 0.8749999999999999, 'acc': 0.8539325842696629, 'dice': 0.7191011235955056, 'gate_mean': 0.5180746912956238, 'epoch': 17})
+loaded /workspace/Code/runs/ordfused_densenet201/fold2_best.pt (fold 2, best {'score': 0.7842696629213484, 'tau': 0.20999999999999996, 'acc': 0.8314606741573034, 'dice': 0.6741573033707865, 'gate_mean': 0.49912527203559875, 'epoch': 13})
+loaded /workspace/Code/runs/ordfused_densenet201/fold3_best.pt (fold 3, best {'score': 0.8127272727272727, 'tau': 0.9299999999999999, 'acc': 0.8522727272727273, 'dice': 0.7204545454545455, 'gate_mean': 0.4074746072292328, 'epoch': 17})
+loaded /workspace/Code/runs/ordfused_densenet201/fold4_best.pt (fold 4, best {'score': 0.7964044943820224, 'tau': 0.7549999999999999, 'acc': 0.8314606741573034, 'dice': 0.7146067415730336, 'gate_mean': 0.24944843351840973, 'epoch': 4})
+[ordfused_densenet201] OOF tau*=0.695 score=0.7714
+[ordfused_densenet201] TEST score=0.7258 acc=0.7658 dice=0.6324 (tau from OOF)
+wrote /workspace/Code/../submissions/submission_ordfused_densenet201.csv

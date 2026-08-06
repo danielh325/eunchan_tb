@@ -1,0 +1,8 @@
+loaded /workspace/Code/runs/ordfused_eva_x_base_notab/fold0_best.pt (fold 0, best {'score': 0.8121348314606741, 'tau': 0.72, 'acc': 0.8539325842696629, 'dice': 0.7146067415730336, 'gate_mean': 0.0, 'epoch': 29})
+loaded /workspace/Code/runs/ordfused_eva_x_base_notab/fold1_best.pt (fold 1, best {'score': 0.8377528089887639, 'tau': 0.5249999999999999, 'acc': 0.8876404494382022, 'dice': 0.7213483146067416, 'gate_mean': 0.0, 'epoch': 18})
+loaded /workspace/Code/runs/ordfused_eva_x_base_notab/fold2_best.pt (fold 2, best {'score': 0.7869662921348315, 'tau': 0.4749999999999999, 'acc': 0.8314606741573034, 'dice': 0.6831460674157303, 'gate_mean': 0.0, 'epoch': 24})
+loaded /workspace/Code/runs/ordfused_eva_x_base_notab/fold3_best.pt (fold 3, best {'score': 0.7686363636363636, 'tau': 0.7749999999999999, 'acc': 0.8068181818181818, 'dice': 0.6795454545454546, 'gate_mean': 0.0, 'epoch': 10})
+loaded /workspace/Code/runs/ordfused_eva_x_base_notab/fold4_best.pt (fold 4, best {'score': 0.795505617977528, 'tau': 0.38999999999999996, 'acc': 0.8426966292134831, 'dice': 0.6853932584269662, 'gate_mean': 0.0, 'epoch': 24})
+[ordfused_eva_x_base_notab] OOF tau*=0.725 accuracy=0.8086
+[ordfused_eva_x_base_notab] TEST score=0.7596 acc=0.8018 dice=0.6613 (tau from OOF)
+wrote /workspace/Code/../submissions/submission_ordfused_eva_x_base_notab.csv

@@ -1,0 +1,8 @@
+loaded /workspace/Code/runs/resnet50d/fold0_best.pt (fold 0, best {'score': 0.7896629213483146, 'tau': 0.7449999999999999, 'acc': 0.8314606741573034, 'dice': 0.6921348314606741, 'epoch': 8})
+loaded /workspace/Code/runs/resnet50d/fold1_best.pt (fold 1, best {'score': 0.8062921348314604, 'tau': 0.7749999999999999, 'acc': 0.8426966292134831, 'dice': 0.7213483146067414, 'epoch': 4})
+loaded /workspace/Code/runs/resnet50d/fold2_best.pt (fold 2, best {'score': 0.7586516853932583, 'tau': 0.48999999999999994, 'acc': 0.797752808988764, 'dice': 0.6674157303370787, 'epoch': 8})
+loaded /workspace/Code/runs/resnet50d/fold3_best.pt (fold 3, best {'score': 0.75, 'tau': 0.625, 'acc': 0.7840909090909091, 'dice': 0.6704545454545454, 'epoch': 4})
+loaded /workspace/Code/runs/resnet50d/fold4_best.pt (fold 4, best {'score': 0.7982022471910111, 'tau': 0.6749999999999999, 'acc': 0.8426966292134831, 'dice': 0.6943820224719102, 'epoch': 9})
+[resnet50d] OOF tau*=0.675 score=0.7657
+[resnet50d] TEST score=0.7665 acc=0.8108 dice=0.6631 (tau from OOF)
+wrote /workspace/Code/../submissions/submission_resnet50d.csv
