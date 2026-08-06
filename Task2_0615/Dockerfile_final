@@ -1,0 +1,65 @@
+# LISA Task 2 — TB/Normal CXR classification, domain-robust build.
+# Copied from Task1_0615/Dockerfile_final (identical base stack already
+# covers everything Task2 needs: timm/transformers/peft for the three
+# backbones, opencv for CLAHE/bone-suppression, SimpleITK for image loading)
+# plus one addition: torchxrayvision, for the lung-segmentation model used by
+# preprocess.py's --lung-crop/--mask-channel steps.
+FROM docker.io/pytorch/pytorch:2.5.1-cuda11.8-cudnn9-devel
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+# No proxy: gpu101 already has direct internet egress (confirmed in Task1's
+# build — the FROM pull above succeeds without one), and the internal proxy
+# was dropping/rejecting apt & pip's requests. mirror.kakao.com is a public
+# mirror anyway, so hitting it directly is both simpler and faster.
+
+RUN sed -i 's|archive.ubuntu.com|mirror.kakao.com|g; s|security.ubuntu.com|mirror.kakao.com|g' /etc/apt/sources.list && \
+    apt-get update && apt-get install -y --no-install-recommends \
+    wget \
+    curl \
+    git \
+    vim \
+    build-essential \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip config set global.index-url https://mirror.kakao.com/pypi/simple/ && \
+    pip config set global.trusted-host mirror.kakao.com && \
+    pip config set global.retries 10 && \
+    pip config set global.timeout 120 && \
+    pip install --no-cache-dir --upgrade pip setuptools wheel
+
+# torch/torchvision come from the base image — do NOT reinstall them here,
+# or pip may pull a CPU-only or mismatched-CUDA build from the mirror.
+RUN printf '%s\n' \
+    '#!/bin/sh' \
+    'for i in 1 2 3 4 5; do' \
+    '    pip install --no-cache-dir "$@" && exit 0' \
+    '    echo "pip attempt $i failed for: $* -- retrying in 15s..." >&2' \
+    '    sleep 15' \
+    'done' \
+    'echo "pip install failed after 5 attempts: $*" >&2' \
+    'exit 1' \
+    > /usr/local/bin/pip-retry && chmod +x /usr/local/bin/pip-retry
+
+RUN pip-retry numpy==1.26.4 scipy==1.13.1
+RUN pip-retry pandas==2.2.3 scikit-learn==1.5.2
+RUN pip-retry timm==1.0.15
+RUN pip-retry tqdm==4.67.1 matplotlib==3.9.2 seaborn==0.13.2
+RUN pip-retry ipykernel==6.29.5 ipywidgets==8.1.5 jupyterlab==4.3.4
+RUN pip-retry SimpleITK==2.4.1 opencv-python-headless==4.10.0.84
+
+# Foundation encoders (RAD-DINO, CheXFound): frozen backbone + LoRA.
+# Checkpoints are NOT baked in here -- Task2's sbatch points
+# TASK2_WEIGHTS_DIR at Task1_0615/Task1/weights/ (already downloaded there
+# by Task1's own foundation-model job), which is bind-mounted read-only
+# alongside Task2's own project root, so no re-download needed.
+RUN pip-retry transformers==4.41.0 huggingface_hub==0.23.4 peft==0.11.1
+ENV XFORMERS_DISABLED=1
+
+# Lung segmentation (preprocess.py --lung-crop / --mask-channel).
+RUN pip-retry torchxrayvision==1.3.4
+
+WORKDIR /workspace
+
+CMD ["/bin/bash"]

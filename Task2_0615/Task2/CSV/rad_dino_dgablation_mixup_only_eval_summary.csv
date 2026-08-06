@@ -1,0 +1,5 @@
+config,dataset,accuracy@0.5,auc,f1@0.5,best_tau,accuracy@best_tau
+mixup_only,test,0.9979,0.9999,0.9978,0.57,0.9979
+mixup_only,shenzhen,0.8218,0.9468,0.8443,0.62,0.8837
+mixup_only,montgomery,0.7174,0.9623,0.7451,0.74,0.9058
+mixup_only,tbx11k_full,0.4615,0.8812,0.2557,0.94,0.9251

@@ -1,0 +1,4 @@
+dataset,accuracy@0.5,auc,f1@0.5,best_tau,accuracy@best_tau
+test,0.9794,0.9994,0.9779,0.32,0.9928
+shenzhen,0.5498,0.6148,0.4087,0.28,0.6103
+montgomery,0.6232,0.7481,0.2121,0.29,0.7319

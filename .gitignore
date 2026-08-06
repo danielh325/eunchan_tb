@@ -1,6 +1,7 @@
 # OS / editor cruft
 .DS_Store
 .idea/
+Thumbs.db
 
 # Claude Code session/memory data -- may contain private notes, never in repo
 .claude/
@@ -38,6 +39,9 @@ Task1_0615/Task1/Code/yolov8m-seg.pt
 Task2_0615/Task2/checkpoints/
 Task2_0615/Task2/Data/
 Task2_0615/Task2/Tuberculosis/
+Task2_0615/Task2/*.tar.gz
+Task1_0615/Task1/*.tar.gz
 
 # Slurm job logs (large text dumps, regenerable by rerunning the job)
 **/sbatch/*.log
+**/sbatch/logs/*.log

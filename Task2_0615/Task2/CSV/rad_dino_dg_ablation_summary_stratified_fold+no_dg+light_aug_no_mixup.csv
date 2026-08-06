@@ -1,0 +1,13 @@
+config,dataset,accuracy@0.5,auc,f1@0.5,best_tau,accuracy@best_tau
+stratified_fold,test,0.9985,0.9999,0.9984,0.23,0.9990
+stratified_fold,shenzhen,0.9169,0.9706,0.9180,0.62,0.9320
+stratified_fold,montgomery,0.7826,0.9707,0.7917,0.87,0.9348
+stratified_fold,tbx11k_full,0.5561,0.8811,0.2944,0.95,0.8743
+no_dg,test,0.9974,0.9997,0.9973,0.34,0.9985
+no_dg,shenzhen,0.8973,0.9574,0.8921,0.39,0.9048
+no_dg,montgomery,0.7464,0.9793,0.7682,0.92,0.9348
+no_dg,tbx11k_full,0.5635,0.8676,0.2936,0.95,0.7629
+light_aug_no_mixup,test,0.9959,0.9999,0.9957,0.46,0.9969
+light_aug_no_mixup,shenzhen,0.8852,0.9557,0.8899,0.59,0.9109
+light_aug_no_mixup,montgomery,0.7391,0.9787,0.7600,0.89,0.9420
+light_aug_no_mixup,tbx11k_full,0.5226,0.8884,0.2796,0.95,0.7951

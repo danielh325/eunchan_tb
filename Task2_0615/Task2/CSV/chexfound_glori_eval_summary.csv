@@ -1,0 +1,5 @@
+config,dataset,accuracy@0.5,auc,f1@0.5,best_tau,accuracy@best_tau
+chexfound_glori,test,0.9835,0.9985,0.9823,0.35,0.9923
+chexfound_glori,shenzhen,0.6964,0.7907,0.6455,0.44,0.7175
+chexfound_glori,montgomery,0.5580,0.8537,0.6554,0.74,0.8043
+chexfound_glori,tbx11k_full,0.4607,0.7155,0.2306,0.95,0.8881

@@ -1,0 +1,5 @@
+config,dataset,accuracy@0.5,auc,f1@0.5,best_tau,accuracy@best_tau
+strong_aug_no_mixup,test,0.9918,0.9996,0.9913,0.33,0.9943
+strong_aug_no_mixup,shenzhen,0.8958,0.9605,0.8966,0.57,0.9079
+strong_aug_no_mixup,montgomery,0.9058,0.9737,0.8976,0.80,0.9348
+strong_aug_no_mixup,tbx11k_full,0.6058,0.9085,0.3172,0.95,0.8636

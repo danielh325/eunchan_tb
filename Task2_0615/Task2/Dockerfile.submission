@@ -1,0 +1,103 @@
+# LISA Task 2 — TB/Normal CXR classification, EXTERNAL PHASE submission image.
+# Self-contained: no bind mounts, no network access needed at runtime.
+# Final model: rad_dino ALONE (strong_aug_no_mixup DG-ablation config), 4
+# leave-one-modality-out fold checkpoints. Switched from the internal-phase
+# rad_dino+chexfound_vitl16 ensemble because rad_dino alone generalizes
+# better on real external data (Shenzhen/Montgomery), and the internal-phase
+# chexfound checkpoints were trained with a LoRA adapter-targeting bug.
+FROM docker.io/pytorch/pytorch:2.5.1-cuda11.8-cudnn9-devel
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN sed -i 's|archive.ubuntu.com|mirror.kakao.com|g; s|security.ubuntu.com|mirror.kakao.com|g' /etc/apt/sources.list && \
+    apt-get update && apt-get install -y --no-install-recommends \
+    wget curl git ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip config set global.index-url https://mirror.kakao.com/pypi/simple/ && \
+    pip config set global.trusted-host mirror.kakao.com && \
+    pip config set global.retries 10 && \
+    pip config set global.timeout 120 && \
+    pip install --no-cache-dir --upgrade pip setuptools wheel
+
+# torch/torchvision come from the base image -- do NOT reinstall here.
+RUN printf '%s\n' \
+    '#!/bin/sh' \
+    'for i in 1 2 3 4 5; do' \
+    '    pip install --no-cache-dir "$@" && exit 0' \
+    '    echo "pip attempt $i failed for: $* -- retrying in 15s..." >&2' \
+    '    sleep 15' \
+    'done' \
+    'echo "pip install failed after 5 attempts: $*" >&2' \
+    'exit 1' \
+    > /usr/local/bin/pip-retry && chmod +x /usr/local/bin/pip-retry
+
+RUN pip-retry numpy==1.26.4 scipy==1.13.1
+RUN pip-retry pandas==2.2.3 scikit-learn==1.5.2
+RUN pip-retry timm==1.0.15
+RUN pip-retry SimpleITK==2.4.1 opencv-python-headless==4.10.0.84
+RUN pip-retry transformers==4.41.0 huggingface_hub==0.23.4 peft==0.11.1
+RUN pip-retry torchxrayvision==1.3.4
+ENV XFORMERS_DISABLED=1
+
+# Pre-download the lung-segmentation model (torchxrayvision PSPNet) at build
+# time -- the only network-dependent step in this pipeline otherwise, and
+# the submission must run with no network access.
+RUN mkdir -p /root/.torchxrayvision/models_data && \
+    wget -q "https://github.com/mlmed/torchxrayvision/releases/download/v1/pspnet_chestxray_best_model_4.pth" \
+    -O /root/.torchxrayvision/models_data/pspnet_chestxray_best_model_4.pth
+
+WORKDIR /workspace
+
+# --- code -------------------------------------------------------------
+# NOTE: build context is PARENT_ROOT (the common parent of Task1_0615 and
+# Task2_0615, see build_submission_image.sbatch), NOT Task2_0615/Task2 --
+# every COPY source below must be a full path from that root. An earlier
+# version of this file used bare "Code/..." paths and failed at build time
+# ("no such file or directory") because Docker looked for them directly
+# under PARENT_ROOT instead of under Task2_0615/Task2/.
+COPY Task2_0615/Task2/Code/common.py Task2_0615/Task2/Code/dataset.py \
+     Task2_0615/Task2/Code/domain_gen.py Task2_0615/Task2/Code/encoders.py \
+     Task2_0615/Task2/Code/model.py Task2_0615/Task2/Code/predict_task2.py \
+     Task2_0615/Task2/Code/preprocess.py Task2_0615/Task2/Code/lung_crop.py \
+     Task2_0615/Task2/Code/tta.py Task2_0615/Task2/Code/bone_suppression.py \
+     /workspace/Code/
+COPY Task2_0615/Task2/Code/vendor /workspace/Code/vendor
+
+# --- model weights ------------------------------------------------------
+# rad_dino at inference (pretrained=False, see encoders.py) only needs
+# config.json to build the right architecture shape before load_state_dict
+# -- the original pretrained safetensors are never read (the Task2
+# checkpoints below already contain the full trained state: backbone +
+# LoRA + head), so only this tiny file is copied, not the ~GB of original
+# RAD-DINO weights. Same reasoning means chexfound's teacher_checkpoint.pth
+# is not needed here at all.
+COPY Task1_0615/Task1/weights/rad_dino/config.json /weights/rad_dino/config.json
+ENV TASK2_WEIGHTS_DIR=/weights
+
+# --- Task2-trained checkpoints (the actual model) ------------------------
+# rad_dino ONLY, from the strong_aug_no_mixup DG-ablation run (NOT the
+# top-level checkpoints/rad_dino_*.pth, which are the older internal-phase
+# checkpoints trained without that ablation's augmentation/mixup settings).
+COPY Task2_0615/Task2/checkpoints/checkpoints_dgablation_strong_aug_no_mixup/rad_dino_CR.pth \
+     Task2_0615/Task2/checkpoints/checkpoints_dgablation_strong_aug_no_mixup/rad_dino_DX.pth \
+     Task2_0615/Task2/checkpoints/checkpoints_dgablation_strong_aug_no_mixup/rad_dino_XA.pth \
+     Task2_0615/Task2/checkpoints/checkpoints_dgablation_strong_aug_no_mixup/rad_dino_XC.pth \
+     /workspace/checkpoints/
+
+# --- FIXED submission entrypoint ------------------------------------------
+# The organizers' repo (mi2rl-challenge/treat-mmtb.miccai2026, Task2/
+# Dockerfile_task2 + README_task2.md) specifies an EXACT, non-negotiable
+# contract: `python predict_task2.py --input /input --output /output`,
+# writing /output/prediction.csv with columns filename,TB/Normal (filename =
+# the raw PNG's own basename, e.g. "abc.png" -- NOT our internal bare
+# `new_id`). submission_predict_task2.py wraps our real pipeline (lung-crop
+# preprocessing + rad_dino alone in Code/predict_task2.py, a DIFFERENT
+# script with a different CLI) and translates
+# between the two. This file must be named predict_task2.py at /workspace/
+# (their WORKDIR) since that's the literal command they run -- it does NOT
+# collide with Code/predict_task2.py, which lives in a different directory
+# and keeps its own --ckpt-dir/--csv/--image-dir/--out interface unchanged.
+COPY Task2_0615/Task2/submission_predict_task2.py /workspace/predict_task2.py
+
+ENTRYPOINT ["python", "predict_task2.py", "--input", "/input", "--output", "/output"]

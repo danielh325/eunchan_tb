@@ -1,0 +1,95 @@
+% Requires: \usepackage{booktabs} in the preamble (standard for ICML).
+% F1@0.5 reported throughout -- see memory: task2_f1_is_the_metric.
+% External columns: Shenzhen (n=662), Montgomery (n=138), TBX11K-balanced
+% (n=1600, class-balanced subsample -- raw TBX11K is 9.5% TB prevalence and
+% not discriminating; healthy-only is an easier subset -- see memory:
+% task2_tbx11k_composition). Internal test n=1940.
+%
+% Mendeley-TB (n=3007, "Pakistan hospital" cohort -- Mendeley Data DOI
+% 10.17632/8j2g3csprk.2, Kiran & Jabeen 2024; no peer-reviewed paper is
+% linked to it, a weaker citation than Shenzhen/Montgomery/TBX11K) is 83%
+% TB-positive, so F1@0.5 is compressed and barely discriminating (0.9038-
+% 0.9127 across EVERY model, including the weakest backbones) -- recall
+% saturates near 1.0 for almost every config, so F1 there mostly reflects
+% precision, not ranking. AUC is the informative metric on this column
+% (0.7566-0.9707) and reproduces the same RAD-DINO > CheXFound pattern seen
+% on Shenzhen/Montgomery; consider reporting it alongside F1, or as a
+% supplementary table, rather than trusting the Mendeley F1 column alone to
+% rank models.
+%
+% "Our model" = RAD-DINO, strong augmentation, no domain-aware mixup,
+% 3-FOLD leave-one-modality-out (CR/DX/XC). The 4th LOMO modality, XA, has
+% only 11 training images, ALL TB-positive -- a single-class held-out fold
+% (undefined AUC, trivially gameable F1) that contributes a near-duplicate
+% bagging checkpoint (trained on ~99.9% the same data as the other three)
+% without adding a genuine domain view. Verified empirically: dropping it
+% changes ensemble F1 by <0.01 on every dataset, and its margin over the
+% stratified_fold ablation (mean of Shenzhen+Montgomery F1) is marginally
+% larger than the 4-fold version's (+0.0435 vs. +0.0423).
+%
+% CAVEAT: the Mendeley column for "Our model" (3-fold) is NOT yet computed
+% -- that ensemble was never scored against Mendeley. The value shown
+% ($^{\dagger}$, 0.9110) is the 4-fold (+mixup-free, XA-included) checkpoint's
+% Mendeley score, used as a proxy pending a real 3-fold Mendeley run.
+
+\begin{table}[t]
+\centering
+\caption{Domain-generalization ablation, RAD-DINO backbone. ``Our model''
+(strong augmentation, no domain-aware mixup, 3-fold LOMO) vs.\ each
+machinery component removed or altered in isolation. F1@0.5 on held-out
+internal test and four external cohorts. $^{\dagger}$Mendeley value is a
+4-fold proxy, not yet computed for the 3-fold checkpoint (see note above).
+$^{\ddagger}$Eval crashed on Mendeley for this configuration (unreadable
+raw-image file); not yet re-run.}
+\label{tab:dg-ablation}
+\begin{tabular}{lccccc}
+\toprule
+Configuration & Test & Shenzhen & Montgomery & TBX11K-bal. & Mendeley \\
+\midrule
+No DG (LOMO folds only)         & 0.9973 & 0.8921 & 0.7682 & 0.7840 & 0.9067 \\
+Stratified fold (vs.\ LOMO)     & \textbf{0.9984} & \textbf{0.9180} & 0.7917 & 0.7906 & 0.9077 \\
+Light augmentation, no mixup    & 0.9957 & 0.8899 & 0.7600 & 0.7789 & 0.9067 \\
+Mixup only (no strong aug.)     & 0.9978 & 0.8443 & 0.7451 & 0.7578 & 0.9067 \\
+No crop (raw images)            & 0.9918 & 0.8524 & 0.8522 & 0.7955 & ---$^{\ddagger}$ \\
+\midrule
+\multicolumn{6}{l}{\emph{Mixup ablation (4-fold LOMO, fold count held constant):}} \\
+Strong aug., no mixup, 4-fold   & 0.9913 & 0.8966 & 0.8976 & 0.8034 & 0.9110 \\
+Strong aug., + mixup, 4-fold    & 0.9890 & 0.8954 & 0.8780 & \textbf{0.8054} & 0.9100 \\
+\midrule
+\multicolumn{6}{l}{\emph{Final model (above config, XA fold dropped -- see note):}} \\
+\textbf{Our model} (strong aug., no mixup, 3-fold) & 0.9907 & 0.8919 & \textbf{0.9048} & 0.8034 & 0.9110$^{\dagger}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Backbone / ensemble comparison. F1@0.5 on held-out internal test
+and four external cohorts. Rows marked $^{*}$ use a CheXFound checkpoint
+trained under a LoRA configuration later found to leave its entire
+feed-forward stack unadapted and to unintentionally adapt its patch
+embedding (see Sect.~\ref{sec:chexfound-lora}); these rows are provisional
+pending retraining and are not final CheXFound numbers. Ensemble rows
+average the 4-fold RAD-DINO (+mixup) checkpoint with CheXFound, not the
+3-fold ``Our model'' checkpoint; pending recomputation. $^{\dagger}$Mendeley
+value for ``Our model'' is a 4-fold proxy (see Table~\ref{tab:dg-ablation}
+note). Mendeley F1 is compressed by 83\% class imbalance and barely
+discriminates between models (0.90--0.91 range); AUC (not shown) reproduces
+the same backbone ranking as Shenzhen/Montgomery.}
+\label{tab:backbone-comparison}
+\begin{tabular}{lccccc}
+\toprule
+Model & Test & Shenzhen & Montgomery & TBX11K-bal. & Mendeley \\
+\midrule
+\textbf{Our model}: RAD-DINO (strong aug., no mixup, 3-fold) & 0.9907 & 0.8919 & \textbf{0.9048} & 0.8034 & 0.9110$^{\dagger}$ \\
+RAD-DINO, strong aug., no mixup, 4-fold & 0.9913 & \textbf{0.8966} & 0.8976 & 0.8034 & 0.9110 \\
+RAD-DINO, strong aug., + mixup, 4-fold & 0.9890 & 0.8954 & 0.8780 & \textbf{0.8054} & 0.9100 \\
+CheXFound$^{*}$                 & 0.9912 & 0.7733 & 0.7160 & 0.7785 & 0.9075 \\
+DenseNet-121                    & 0.9863 & 0.7202 & 0.6607 & 0.7186 & 0.9084 \\
+Swin-Tiny                       & 0.9879 & 0.7496 & 0.7434 & 0.7032 & 0.9094 \\
+ConvNeXt-Tiny                   & 0.9857 & 0.7282 & 0.6947 & 0.7229 & 0.9038 \\
+Ens.\ RAD-DINO + CheXFound$^{*}$ & \textbf{0.9929} & 0.8433 & 0.8201 & 0.8004 & 0.9095 \\
+Ens.\ 5-encoder$^{*}$           & 0.9890 & 0.7707 & 0.8348 & 0.7633 & 0.9127 \\
+\bottomrule
+\end{tabular}
+\end{table}

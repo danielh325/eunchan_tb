@@ -1,0 +1,2 @@
+dataset,tag,ckpt_dir,encoder,accuracy@0.5,auc,f1@0.5,best_tau,accuracy@best_tau
+shenzhen,baseline_densenet121,checkpoints,densenet121,0.6631,0.7798,0.7202,0.71,0.7296
