@@ -397,12 +397,35 @@ def main():
     df = pd.read_csv(args.csv)
     df = df[df[LABEL_COL].astype(str).str.strip().str.lower().isin(LABEL_MAP)].reset_index(drop=True)
 
+    # Auxiliary rows (is_aux=1) are extra training-only data from a pool that is
+    # NOT part of this challenge's modality structure -- currently the TBX11K
+    # sick-but-not-TB hard negatives (see build_hardneg_train_csv.py). They must
+    # never define or land in a validation fold, otherwise (a) they would invent
+    # a spurious extra leave-one-modality-out fold, and (b) fold metrics would
+    # stop being comparable to every earlier run. Folds are therefore computed on
+    # the challenge rows ALONE, and aux rows are then pinned to fold=-1, which
+    # puts them in every fold's train side (`fold != f` always true) and no
+    # fold's val side (`fold == f` never true, since f >= 0).
+    has_aux = "is_aux" in df.columns and (df["is_aux"] == 1).any()
+    if has_aux:
+        aux_df = df[df["is_aux"] == 1].copy()
+        df = df[df["is_aux"] != 1].reset_index(drop=True)
+    else:
+        aux_df = None
+
     if args.fold_mode == "leave_one_modality_out":
         df, modalities = make_leave_one_modality_out_folds(df)
         fold_names = modalities
     else:
         df = make_stratified_folds(df, n_folds=args.n_folds, seed=args.seed)
         fold_names = [f"fold{i}" for i in range(args.n_folds)]
+
+    if aux_df is not None:
+        aux_df["fold"] = -1
+        df = pd.concat([df, aux_df], ignore_index=True)
+        n_pos = int((aux_df[LABEL_COL].astype(str).str.strip().str.lower() == "tb").sum())
+        print(f"[aux] {len(aux_df)} training-only rows added to every fold "
+              f"({n_pos} TB / {len(aux_df) - n_pos} Normal); excluded from all validation")
 
     results = []
     for f, tag in enumerate(fold_names):

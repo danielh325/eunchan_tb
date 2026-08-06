@@ -38,6 +38,35 @@ from model import TBClassifier
 ENCODERS = ["densenet121", "swin_tiny", "convnext_tiny"]
 ALL_ENCODERS = ENCODERS + ["rad_dino"]  # rad_dino also valid via --encoders, just not in the default run
 
+_LUNG_CROPPER = None  # lazy singleton -- loading torchxrayvision's PSPNet is a one-time cost shared across every image in a batch
+
+
+def lung_mask_grid(crop_arr, grid):
+    """Segments crop_arr (the ch0 image the model actually saw, already
+    lung-cropped by preprocess.py) with the same PSPNet lung segmenter
+    lung_crop.py uses, then downsamples the resulting boolean mask to
+    (grid, grid) to align 1:1 with gradcam_rad_dino's patch-token grid.
+
+    Manual review of 25 real gradcam_3col_task2.py outputs (see memory:
+    task2_gradcam_not_clinically_valid) found rib-contour tracing, a
+    register-token border stripe surviving the median+MAD clip, and even an
+    anatomically-impossible sub-diaphragm hotspot -- all outside the actual
+    lung field. Masking the CAM to inside the segmented lung kills all three
+    by construction, regardless of whether the underlying attribution is
+    otherwise trustworthy.
+    """
+    global _LUNG_CROPPER
+    if _LUNG_CROPPER is None:
+        from lung_crop import LungCropper
+        _LUNG_CROPPER = LungCropper()
+    full_mask = _LUNG_CROPPER.segment(crop_arr.astype(np.float32))  # (H,W) bool, crop_arr's own resolution
+    small = cv2.resize(full_mask.astype(np.float32), (grid, grid), interpolation=cv2.INTER_AREA)
+    # INTER_AREA gives each grid cell the fraction of lung-mask pixels it
+    # covers -- threshold low (>0.15) rather than >0.5 so patch cells straddling
+    # the lung boundary (real disease can sit right at the pleural edge) aren't
+    # discarded just for being majority-non-lung.
+    return small > 0.15
+
 
 def load_checkpoint(ckpt_dir, encoder_name, fold_tag):
     path = os.path.join(ckpt_dir, f"{encoder_name}_{fold_tag}.pth")
@@ -111,10 +140,18 @@ def gradcam_timm(model, x):
     return cam[0].detach().numpy(), torch.sigmoid(logit).item()
 
 
-def gradcam_rad_dino(model, x):
+def gradcam_rad_dino(model, x, mask_grid=None):
     """rad_dino -- true, class-discriminative Grad-CAM on hidden_states[-2]
     (the second-to-last transformer block's patch-token outputs), NOT the
     CLS-attention map an earlier version of this function used.
+
+    mask_grid: optional (grid, grid) bool array (see lung_mask_grid above),
+    same resolution as this function's own patch-token grid. When given,
+    the median/MAD clip below is computed from in-lung cells only (so a few
+    contaminated border cells can't drag the clip threshold up), and the
+    final map is zeroed outside the mask -- see lung_mask_grid's docstring
+    for why this was added (rib tracing / border stripe / sub-diaphragm
+    hotspots surviving the clip alone on real images).
 
     Backprop from the logit through TBClassifier's head hits
     Dinov2Model's pooler_output, computed from last_hidden_state[:, 0]
@@ -184,10 +221,13 @@ def gradcam_rad_dino(model, x):
     # margin). Verified on the same synthetic 2-ring case: this clips the
     # edge down to ~2x the true interior max, vs ~40x for the interior-
     # percentile attempt.
-    med = np.median(cam)
-    mad = np.median(np.abs(cam - med)) + 1e-8
+    clip_source = cam[mask_grid] if mask_grid is not None and mask_grid.any() else cam
+    med = np.median(clip_source)
+    mad = np.median(np.abs(clip_source - med)) + 1e-8
     clip_val = med + 6 * mad
     cam = np.clip(cam, None, clip_val)
+    if mask_grid is not None:
+        cam = cam * mask_grid
     return cam, torch.sigmoid(logit).item()
 
 

@@ -1,0 +1,68 @@
+■ PROJECT: Task1 - Cavity Detection & Segmentation
+■ DATE   : 2026-05-11 (Last Updated)
+
+======================================================================
+[DIRECTORY STRUCTURE]
+Task1/
+├── Data/
+│   ├── train/                            # training data
+│   │   ├── CXR/                       # 원본 2D DICOM 파일
+│   │   └── CXR_label/                # Cavity Mask (.nii.gz) *빈 데이터는 Black(512x512)
+│   ├── valid/                            # valid data
+│   │   ├── CXR/                       # 원본 2D DICOM 파일
+│   │   └── CXR_label/                # Cavity Mask (.nii.gz) *빈 데이터는 Black(512x512)
+│   ├── train.csv                         # training data metadata
+│   └── valid.csv                         # validation data metadata
+│
+├── Code/
+│   ├── baseline/                       # nnUNetv2 기반 학습 환경
+│   │   └── nnUNetv2/                   # nnUNetv2 메인 작업 디렉터리
+│   │       ├── nnUNet/                 # 소스 코드 및 환경 설정
+│   │       │   └── Dockerfile          # 컨테이너 빌드 파일
+│   │       └── nnUNet_data/            # nnUNet 실행 데이터 및 결과
+│   │           ├── nnUNet_raw/
+│   │           │   └── Dataset001_Task1/
+│   │           │       ├── imagesTr/   # 전처리 영상 (0000:Ch1, 0001:Ch2, 0002:Ch1더미)
+│   │           │       ├── labelsTr/   # 대응되는 Ground Truth Label
+│   │           │       └── dataset.json# 데이터셋 규격 기술서
+│   │           ├── nnUNet_preprocessed/
+│   │           │   └── Dataset001_Task1/
+│   │           │       └── splits_final.json  # [CRITICAL] 고정된 데이터 분할 설정
+│   │           └── nnUNet_results/
+│   │               └── Dataset001_Task1/
+│   │                   └── nnUNetTrainer__nnUNetPlans__2d/
+│   │                       └── fold0/  # Best/Final 모델 및 Validation 결과
+│   │
+│   └── preprocess/                                   # 데이터 전처리 파이프라인
+│       └── 01_custom_preprocessing_v2.ipynb       # 메인 전처리 스크립트
+│
+└── info.txt                            # 본 프로젝트 설명 파일 (현재 파일)
+
+======================================================================
+[CAUTION: DATA SPLIT]
+※ 학습 및 검증의 일관성을 위해 Train/Valid 데이터셋은 고정된 상태입니다.
+※ nnUNet_preprocessed/.../splits_final.json 파일은 본 프로젝트의
+데이터 분할 정보를 담고 있으므로, 절대 임의로 수정하거나 삭제하지 마십시오.
+
+======================================================================
+
+[FILE DETAILS]
+1. 데이터 구성 (CXR_label/)
+
+	Cavity가 없는 케이스는 512x512 크기의 검은색(zero-padding) .nii.gz 파일로 대체하여 데이터 페어 유지.
+
+2. nnUNet 채널 구성 (imagesTr/)
+
+	_0000.nii.gz : 전처리 적용 채널 1
+
+	_0001.nii.gz : 전처리 적용 채널 2
+
+	_0002.nii.gz : 채널 1과 동일	
+
+3. 학습 결과 (nnUNet_results/)
+
+	fold0 내의 validation 폴더에서 모델의 예측 마스크(Mask) 확인 가능.
+
+	training_log_2026_4_24...txt 에 전체 학습 이력이 기록됨.
+
+======================================================================

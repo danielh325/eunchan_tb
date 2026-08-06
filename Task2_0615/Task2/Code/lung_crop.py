@@ -11,13 +11,40 @@ NIH/RSNA-derived masks) -- no training data or fine-tuning needed, it's a
 frozen off-the-shelf segmenter, run once as a preprocessing pass over the
 whole dataset (not part of the training loop).
 """
+import sys
+
 import numpy as np
 import torch
 
 
+def _import_torchxrayvision():
+    """torchxrayvision.baseline_models.jfhealthcare (imported unconditionally
+    by baseline_models/__init__.py, even though we only ever use chestx_det)
+    does `sys.path.insert(0, thisfolder)` then `from model.utils import
+    get_norm` -- an absolute import that only resolves correctly if
+    sys.modules['model'] is NOT already cached, letting their sys.path
+    insert win. In this project, Code/model.py (TBClassifier) is almost
+    always imported as top-level `model` before this ever runs (every
+    gradcam/predict script does `from model import TBClassifier`), which
+    poisons that cache and makes torchxrayvision's own import crash with
+    "'model' is not a package" -- confirmed by reproducing it with a plain
+    `import model; import torchxrayvision`. Shield the cache for this one
+    import, then restore it so the rest of this process still gets OUR
+    model.py under the `model` name, not theirs."""
+    stashed = sys.modules.pop("model", None)
+    try:
+        import torchxrayvision as xrv
+    finally:
+        if stashed is not None:
+            sys.modules["model"] = stashed
+        else:
+            sys.modules.pop("model", None)
+    return xrv
+
+
 class LungCropper:
     def __init__(self, device: str = "cuda" if torch.cuda.is_available() else "cpu", margin_frac: float = 0.05):
-        import torchxrayvision as xrv
+        xrv = _import_torchxrayvision()
         self.model = xrv.baseline_models.chestx_det.PSPNet().to(device).eval()
         self.device = device
         self.margin_frac = margin_frac

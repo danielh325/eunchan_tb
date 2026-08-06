@@ -27,7 +27,7 @@ import torch
 from common import find_file, sitk_read
 from dataset import Cfg
 from gradcam_grid_task2 import plain_image_tile, save_grid
-from gradcam_task2 import build_model, gradcam_rad_dino, load_checkpoint, load_input, overlay
+from gradcam_task2 import build_model, gradcam_rad_dino, load_checkpoint, load_input, lung_mask_grid, overlay
 
 
 def main():
@@ -77,7 +77,8 @@ def main():
         cfg = Cfg(args.encoder, image_dir=args.crop_dir)
         x, crop_arr = load_input(args.crop_dir, image_id, cfg)
 
-        cam, prob_tb = gradcam_rad_dino(model, x)
+        mask_grid = lung_mask_grid(crop_arr, grid=37)
+        cam, prob_tb = gradcam_rad_dino(model, x, mask_grid=mask_grid)
         print(f"    P(TB) = {prob_tb:.4f}")
 
         original_vis = plain_image_tile(raw_arr, args.tile_size)
